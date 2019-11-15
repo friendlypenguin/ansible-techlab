@@ -12,14 +12,14 @@ To make it as easier for inexperienced users we installed an editor and terminal
 Copy and paste the following URL and replace `<controller-ip>` with the IP of your controller host:
 
 ----
-http://<controller-ip>
+https://<dnsname>
 ----
 
 Login using the following username and password:
 
 ----
 username: ansible
-password: quirky
+password: << web password >>
 ----
 After a successful login you should see an editor similar to _visual studio code_ in your browser. In the navigation bar you can open "Terminal" or press `ctrl-shift-^` to open a terminal. 
 Do this now and then continue with the installation of Ansible.
