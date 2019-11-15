@@ -9,20 +9,13 @@ In this lab we will learn to use more ansible magic!
 - Output a message at the end of the play informing you the download attempt has finished.
 
 ### TASK 2
+- Write a playbook which installs multiple packages containing a service.
+- start those services in the same playbook using a loop.
 
-### TASK 3
-
-### TASK 4
-
-### TASK 5
-
-### TASK 6
-
-### TASK 7
-
-### TASK 8
-
-### TASK 9
+[TIP]
+====
+ Check if you really need a loop when installing multiple packages.
+====
 
 ## Solutions
 
@@ -58,84 +51,25 @@ $ ansible-playbook download.yml
 ====
 [shell]
 ----
-
-
-
-----
-====
-
-.Solution 3
-[%collapsible]
-====
-[shell]
-----
-
-
-
-----
-====
-.Solution 4 
-[%collapsible]
-====
-[shell]
-----
-
-
-
-----
-====
-
-.Solution 5 
-[%collapsible]
-====
-[shell]
-----
-
-
-
-----
-====
-
-.Solution 6
-[%collapsible]
-====
-[shell]
-----
-
-
-
-----
-====
-
-.Solution 7 
-[%collapsible]
-====
-[shell]
-----
-
-
-
-----
-====
-
-.Solution 8
-[%collapsible]
-====
-[shell]
-----
-
-
-
-----
-====
-
-.Solution 9
-[%collapsible]
-====
-[shell]
-----
-
-
-
+$ cat services.yml
+---
+- name: node1
+  become: yes
+  tasks:
+    - name: install packages
+      yum:
+        name:
+          - httpd
+          - chrony
+          - audit
+        state: present
+    - name: start the services
+      service:
+        name: "{{ item }}"
+        state: started
+      loop:
+        - httpd
+        - chronyd
+        - auditd
 ----
 ====
