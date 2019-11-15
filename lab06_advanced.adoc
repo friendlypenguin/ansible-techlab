@@ -1,0 +1,141 @@
+# LAB06 - Advanced tasks using ansible
+
+In this lab we will learn to use more ansible magic!
+
+### Task 1
+- Write a `download.yml` playbook which tries to download something from a non-existing URL onto node2.
+- The playbook should be able to handle errors. Make the playbook output the message _"Download failed!"_ if
+  the `download` task failed. The playbook bust keep on running and not exit after this message.
+- Output a message at the end of the play informing you the download attempt has finished.
+
+### TASK 2
+
+### TASK 3
+
+### TASK 4
+
+### TASK 5
+
+### TASK 6
+
+### TASK 7
+
+### TASK 8
+
+### TASK 9
+
+## Solutions
+
+.Solution 1
+[%collapsible]
+====
+[shell]
+----
+$ cat download.yml
+---
+- hosts: node2
+  become: yes
+  tasks:
+    - block:
+        - name: Download random things from the internet
+          get_url:
+            url: http://www.asdfasdfasppppakdd.com/file
+            dest: /tmp/
+      rescue:
+        - debug:
+            msg: "Download failed!"
+      always:
+        - debug:
+            msg: "Download attempt finished."
+
+$ ansible-playbook download.yml
+----
+====
+
+
+.Solution 2
+[%collapsible]
+====
+[shell]
+----
+
+
+
+----
+====
+
+.Solution 3
+[%collapsible]
+====
+[shell]
+----
+
+
+
+----
+====
+.Solution 4 
+[%collapsible]
+====
+[shell]
+----
+
+
+
+----
+====
+
+.Solution 5 
+[%collapsible]
+====
+[shell]
+----
+
+
+
+----
+====
+
+.Solution 6
+[%collapsible]
+====
+[shell]
+----
+
+
+
+----
+====
+
+.Solution 7 
+[%collapsible]
+====
+[shell]
+----
+
+
+
+----
+====
+
+.Solution 8
+[%collapsible]
+====
+[shell]
+----
+
+
+
+----
+====
+
+.Solution 9
+[%collapsible]
+====
+[shell]
+----
+
+
+
+----
+====
