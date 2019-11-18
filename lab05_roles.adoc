@@ -35,7 +35,7 @@ Create a new role called `base`. It's `main.yml` should import the following tas
 ====
 
 ### TASK 5
-- Rewrite the `webserver` role to apply the `base` role each time it is used in a playbook. 
+- Rewrite the `webserver` role to apply the `base` role each time it is used in a playbook. ("Dependency")
 - Run the playbook and see if role `base` was applied as well.
 
 ## Solutions
