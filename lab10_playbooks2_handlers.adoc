@@ -46,7 +46,7 @@ Below is a possible solution for your playbook:
 ----
 
 If you are unsure how to run your playbook, then have a look at the earlier labs.
-
+====
 
 
 .Solution 2
@@ -59,4 +59,4 @@ Add the following task
       reboot:
       when: ansible_uptime_seconds >= '3600'
 ----
-
+====
