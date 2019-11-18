@@ -4,7 +4,7 @@ During this we'll learn how to write and use ansible roles.
 
 ### Task 1
 - Create a directory `roles` in your techlab folder.
-- Configure your ansible environment to use the `roles` folder as you did in a previous lab.
+- Configure your ansible environment to use the `roles` folder as source for roles.
 
 ### TASK 2
 Write a `webserver` role in your new `roles` folder which does the following:
