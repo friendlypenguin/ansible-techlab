@@ -5,7 +5,7 @@ In this lab we will learn to use more ansible magic!
 ### Task 1
 - Write a `download.yml` playbook which tries to download something from a non-existing URL onto node2.
 - The playbook should be able to handle errors. Make the playbook output the message _"Download failed!"_ if
-  the `download` task failed. The playbook bust keep on running and not exit after this message.
+  the `download` task failed. The playbook bust keep on running and shall not exit after this message.
 - Output a message at the end of the play informing you the download attempt has finished.
 
 ### TASK 2
