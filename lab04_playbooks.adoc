@@ -24,11 +24,6 @@ Create a playbook `webserver.yml` which does the following:
 - In your playbook you have two tasks for starting and enabling `httpd` and `firewalld`. Merge these 2 tasks
   into one.
 
-[TIP]
-====
-Remember `loop:` or the deprecated `with_items:`?
-====
-
 ### TASK 4
 - Write a new playbook `motd.yml` which sets the content of `/etc/motd` on all servers to a custom text. Use
   the variable `motd_content` and the `copy` module with the option `content` containing the variable. 
