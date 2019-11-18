@@ -20,19 +20,6 @@ In this lab we'll get more used to using playbooks.
 - Run the playbook a second time. Is the reboot-task skipped now?
 
 ### TASK 3
-- Create a file with the following content:
-```
----
-users:
-  name: tom
-  job: x
-  name: jenny 
-  job: 
-  name: 
-  job z
-## Solutions
-
-### TASK 4
 - Create a playbook, that is run on all servers.
 - The playbook should install the package `atop` on all servers that belong to a group that contain the letter `e` in its name.
 - When the package wasn't installed before, then do also reboot the server.
@@ -81,18 +68,6 @@ Add the following task to your play
 ====
 
 .Solution 3
-[%collapsible]
-====
-Add the following task to your play
-[shell]
-----
-    - name: reboot if longer than one hour up
-      reboot:
-      when: ansible_uptime_seconds >= '3600'
-----
-====
-
-.Solution 4
 [%collapsible]
 ====
 [shell]
