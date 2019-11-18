@@ -9,7 +9,7 @@ In this lab we will learn to use more ansible magic!
 - Output a message at the end of the play informing you the download attempt has finished.
 
 ### TASK 2
-- Write a playbook which installs multiple packages containing a service.
+- Write a playbook which installs multiple yum packages containing a service (f.e. httpd).
 - start those services in the same playbook using a loop.
 
 [TIP]
