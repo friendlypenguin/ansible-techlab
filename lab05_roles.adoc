@@ -38,7 +38,12 @@ Create a new role called `base`. It's `main.yml` should import the following tas
 - Rewrite the `webserver` role to apply the `base` role each time it is used in a playbook. ("Dependency")
 - Run the playbook and see if role `base` was applied as well.
 
-### TASK 6 - Sysadmins only
+### TASK 6
+- Now, lets het creative for yourself.
+- Think about a functionality you would like to bundle as a role.
+- Do try to create a role covering your desired tasks.
+
+### TASK 7 - Sysadmins only
 - create a role, that installs samba and configures a samba share.
 
 
@@ -190,6 +195,12 @@ $ ansible-playbook prod.yml
 ====
 
 .Solution 6
+[%collapsible]
+====
+Do ask the teacher for help.
+====
+
+.Solution 7
 [%collapsible]
 ====
 No solutions for difficult tasks :-)
