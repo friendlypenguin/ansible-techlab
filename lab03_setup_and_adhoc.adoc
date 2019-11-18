@@ -16,11 +16,11 @@ You've used the `ping` module in a previous lab.
 
 ### TASK 3
 - Search through the online documentation for special (magical) variables.
-- Which special variable you could use to set the `hostname` on all the servers using the information in the `inventory` file.
+- Which special variable could you use to set the `hostname` on all the servers using the information in the `inventory` file?
 
 ### TASK 4
 - Try to find an appropriate ansible module to complete task 3. Find out what parameters the module accepts.
-- This module will try make changes to the `/etc/hostname` file. What options should you use with the `ansible`
+- This module will try to make changes to the `/etc/hostname` file. What options should you use with the `ansible`
   command for it to work?
 
 ### TASK 5
