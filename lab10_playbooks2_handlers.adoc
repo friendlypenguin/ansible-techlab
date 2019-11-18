@@ -52,7 +52,7 @@ If you are unsure how to run your playbook, then have a look at the earlier labs
 .Solution 2
 [%collapsible]
 ====
-Add the following task
+Add the following task to your play
 [shell]
 ----
     - name: reboot if longer than one hour up
