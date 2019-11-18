@@ -29,8 +29,7 @@ Do this now and then continue with the installation of Ansible.
 
 [TIP]
 ====
-Use `sudo -s` to elevate your privilege to that of `root`. The `-s` parameter keeps you in your current
-working directory.
+Use `sudo` to elevate your privilege to that of `root`. Be sure to only install the packages using root priviledges, you should do the rest of the lab as user anisble.
 ====
 
 - Test if you can connect to the nodes from your controller using SSH. Use their public IPs you received from
@@ -43,7 +42,7 @@ working directory.
 - Test the login on the nodes.
 
 ### TASK 3
-- Create an inventory `hosts` file in your working directory with your public IPs:
+- Create an inventory file called `hosts` in your working directory with your public IPs:
 
 [ini]
 ----  
