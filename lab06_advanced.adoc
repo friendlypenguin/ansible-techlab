@@ -36,8 +36,8 @@ In this lab we will learn to use more ansible magic!
 
 ### TASK 5
 - Create a playbook, that is run on all servers.
-- The playbook should install the package `atop` on all servers that belong to a group that contain the letter `e` in its name.
-- When the package wasn't installed before, then do also reboot the server.
+- The playbook should contain a task, that installs the package `atop` on all servers that belong to the group `web` in its name.
+- When the package gets installed, then do also reboot the server. Don't reboot if the package was already installed.
 - Run the playbook a several times again. Is the server booted again?
 
 ### TASK 6
