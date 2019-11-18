@@ -13,7 +13,7 @@ Write a `webserver` role in your new `roles` folder which does the following:
 - Install `firewalld` and allow traffic for the services `http` and `https`.
 
 ### TASK 3
-- Modify your playbook `webserver.yml` to use your new `webserver` role. It should be run on all hosts in the `web` group. 
+- Modify your playbook `webserver.yml` from lab04 to use your new `webserver` role. It should be run on all hosts in the `web` group. 
 - Run your playbook  and check if everything went as expected.
 
 ### TASK 4
