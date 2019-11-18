@@ -29,7 +29,7 @@ Do this now and then continue with the installation of Ansible.
 
 [TIP]
 ====
-Use `sudo` to elevate your privilege to that of `root`. Be sure to only install the packages using root priviledges, you should do the rest of the lab as user anisble.
+Use `sudo` to elevate your privilege to that of `root`. Be sure to only use root priviledges for installing the packages, you should do the rest of the lab as user anisble.
 ====
 
 - Test if you can connect to the nodes from your controller using SSH. Use their public IPs you received from
@@ -39,7 +39,7 @@ Use `sudo` to elevate your privilege to that of `root`. Be sure to only install 
 ### TASK 2
 - Create a SSH-keypair for the `ansible` user on the `controller`. 
 - Enable SSH-key login for the `ansible` user on all nodes and the controller by distributing the SSH-public key.
-- Test the login on the nodes.
+- Test the login on the nodes and the controller using ansible.
 
 ### TASK 3
 - Create an inventory file called `hosts` in your working directory with your public IPs:
@@ -54,7 +54,12 @@ node1 ansible_host=<your-node1-ip>
 
 [db]
 node2 ansible_host=<your-node2-ip>
-----  
+----
+
+[TIP]
+====
+Instead of copying the ssh-id to the controller itself you could set "ansible_connection=local" in the inventory file for host "controller".
+====
 
 [NOTE]
 ====
