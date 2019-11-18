@@ -3,7 +3,7 @@
 In this lab we'll get more used to using playbooks and learn something about handlers.
 
 ### Task 1
-Create a playbook `myhandler.yml` which does the following:
+- Create a playbook `myhandler.yml` which does the following:
 - Create a directory `newdir` in the techlab folder of node1.
 - if the folder didn't exist before, then do create a file `README.TXT` in this folder containing the text "This folder was created at <timestamp>"
 - the value of timestamp should contain a quite accurate timestamo of when ansible-playbook was run.
