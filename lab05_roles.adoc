@@ -39,13 +39,12 @@ Create a new role called `base`. It's `main.yml` should import the following tas
 - Run the playbook and see if role `base` was applied as well.
 
 ### TASK 6
-- Now, lets het creative for yourself.
+- Now, lets get creative yourself.
 - Think about a functionality you would like to bundle as a role.
-- Do try to create a role covering your desired tasks.
+- Do try to create this role.
 
 ### TASK 7 - Sysadmins only
-- create a role, that installs samba and configures a samba share.
-
+- Create a role `samba`, that provides a sambashare to use with a user `sambauser`. This task is hard! Do provides passwords in cleartext here. We will learn later how to use Ansible-Vault. 
 
 ## Solutions
 
