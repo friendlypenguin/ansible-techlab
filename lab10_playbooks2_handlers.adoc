@@ -23,7 +23,7 @@ In this lab we'll get more used to using playbooks.
 - Create a playbook, that is run on all servers.
 - The playbook should install the package `atop` on all servers that belong to a group that contain the letter `e` in its name.
 - When the package wasn't installed before, then do also reboot the server.
-- Run the playbook a second time. Is the server booted again?
+- Run the playbook a several times again. Is the server booted again?
 
 
 .Solution 1
