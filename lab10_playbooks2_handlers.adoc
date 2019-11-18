@@ -1,13 +1,13 @@
 # LAB04 - Ansible Playbooks
 
-In this lab we'll get more used to using playbooks and learn something about handlers.
+In this lab we'll get more used to using playbooks.
 
 ### Task 1
 - Create a playbook `myhandler.yml` which does the following:
-- Create a directory `newdir` in the techlab folder of node1.
+- Create a directory `newdir` in the folder `/home/ansible` of node1.
 - if the folder didn't exist before, then do create a file `README.TXT` in this folder containing the text "This folder was created at <timestamp>"
-- the value of timestamp should contain a quite accurate timestamo of when ansible-playbook was run.
-- run the playbook several time to see if it is really idempotent.
+- the value of timestamp should contain a quite accurate timestamp of when `ansible-playbook` was run.
+- run the playbook several times to see if it is really idempotent.
 
 [TIP]
 ====
@@ -15,9 +15,8 @@ In this lab we'll get more used to using playbooks and learn something about han
 ====
 
 ### TASK 2
-- Create a folder `inventory` and move your inventory `hosts` there.
-- Configure ansible to use `/home/ansible/techlab/inventory/hosts` as the default inventory. Do this using a configuration file in the `/home/ansible/techlab/` directory. 
-- Run the playbook again without using the `-i` flag to see if the configuration works.
+- Do extend your playbook to do the following:
+- If the uptime of the server is higher than one hour, then do reboot the server.
 
 ## Solutions
 
@@ -34,7 +33,7 @@ Below is a possible solution for your playbook:
   tasks:
     - name: create directory
       file:
-        path: /home/ansible/techlab/newdir
+        path: /home/ansible/newdir
         state: directory
       notify: timestamp
 
@@ -53,9 +52,11 @@ If you are unsure how to run your playbook, then have a look at the earlier labs
 .Solution 2
 [%collapsible]
 ====
+Add the following task
 [shell]
 ----
-$ mkdir inventory; mv hosts inventory/hosts
-$ cp /etc/ansible/ansible.cfg /home/ansible/techlab/
+    - name: reboot if longer than one hour up
+      reboot:
+      when: ansible_uptime_seconds >= '3600'
 ----
 
