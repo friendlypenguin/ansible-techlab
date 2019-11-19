@@ -2,6 +2,10 @@
 
 In this lab we will learn to use more ansible magic!
 
+### Task 0
+- If not done yet, do install ansible-lint
+- check your yaml files for syntax errors with ansible-lint
+
 ### Task 1
 - Write a `download.yml` playbook which tries to download something from a non-existing URL onto node2.
 - The playbook should be able to handle errors. Make the playbook output the message _"Download failed!"_ if
@@ -52,7 +56,15 @@ In this lab we will learn to use more ansible magic!
 Be sure that this file is dynamic: When you add an additional node to the inventory, then a further playbook-run should add a corresponding entry to /etc/hosts on all nodes.
 
 ## Solutions
-
+.Solution 1
+[%collapsible]
+====
+[shell]
+----
+sudo yum install -y ansible-lint
+ansible-lint <yourfile>.yml
+----
+====
 .Solution 1
 [%collapsible]
 ====
