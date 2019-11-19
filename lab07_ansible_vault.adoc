@@ -29,9 +29,13 @@ var_password: miss_moneypenny
 - Rerun the playbook and remember nothing has been encrypted yet.
 
 ### TASK 3
-- Create a file named `vaultpassword` containing the unencrypted string "goldfinger".
 
-- Encrypt the `secret_vars.yml` file by using `ansible-vault` with the password _Dr.NO!_. 
+- Encrypt the `secret_vars.yml` file by using `ansible-vault` with the password _Dr.NO!_ provided on the commandline.
+- see if the file was encrypted
+- decrypt the file, so that it humanreadable again
+
+- Create a file named `vaultpassword` containing the unencrypted string "goldfinger".
+- encrypt the file by using the file `vaultpassword`
 
 [TIP]
 ====
