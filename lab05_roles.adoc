@@ -44,7 +44,7 @@ Create a new role called `base`. It's `main.yml` should import the following tas
 - Do try to create this role.
 
 ### TASK 7 - Sysadmins only
-- Create a role `samba`, that provides a sambashare to use with a user `sambauser`. This task is hard! Do provides passwords in cleartext here. We will learn later how to use Ansible-Vault. 
+- Create a role `samba`, that provides a sambashare to use with a user `sambauser`. This task is hard! Do provide passwords in cleartext here. We will learn later how to use Ansible-Vault. 
 
 ## Solutions
 
