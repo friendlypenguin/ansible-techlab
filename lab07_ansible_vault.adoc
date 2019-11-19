@@ -136,7 +136,7 @@ $ ansible-playbook secretservice.yml -i inventory/hosts --vault-id vaultpassword
 Make sure you recieve the following output in your terminal:
 [shell]
 ----
-$ grep ^vault /etc/ansible/ansible.cfg 
+$ grep ^vault /home/ansible/techlab/ansible.cfg 
 vault_password_file = /home/ansible/techlab/vaultpassword
 
 $ ansible-playbook secretservice.yml -i inventory/hosts
