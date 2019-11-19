@@ -196,3 +196,14 @@ $ ansible-vault rekey secret_vars2.yml --vault-id @prompt
 $ ansible-playbook secretservice.yml -i inventory/hosts
 ----
 ====
+
+.Solution 8
+[%collapsible]
+====
+[shell]
+----
+no_log: true
+----
+see https://docs.ansible.com/ansible/devel/reference_appendices/logging.html
+and https://docs.ansible.com/ansible/devel/reference_appendices/faq.html#keep-secret-data
+====
