@@ -53,6 +53,14 @@ You don't have to set a label.
 ### TASK 6
 - Remove the `/etc/MI6` file on the nodes using an ad-hoc command.
 
+### TASK 7
+- Encrypt another file secret_vars2.yml. Ensure its encrypted with your password
+- Change the encryption of the file: encrpyt it with another password provided at the commandline. (Hint not by decrypting & reencrypting but with using `rekey`)
+- try using the option --vault-id and try using --ask-vaut-pass
+
+### TASK 8
+- What can you do, to avoid ansible to print out sensitive data ar runtime? (see docs.ansible.com)
+
 ## Solutions
 .Solution 1
 [%collapsible]
@@ -177,3 +185,14 @@ $ ansible node1,node2 -i inventory/hosts -b -a "rm /etc/MI6"
 Note that the `command` module is the `default` module and therefore has not to be specified here.
 ====
 =====
+
+.Solution 7
+[%collapsible]
+====
+[shell]
+----
+$ ansible-vault rekey secret_vars2.yml --vault-id @prompt
+
+$ ansible-playbook secretservice.yml -i inventory/hosts
+----
+====
