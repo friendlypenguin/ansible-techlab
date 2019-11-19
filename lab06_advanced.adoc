@@ -45,6 +45,32 @@ In this lab we will learn to use more ansible magic!
 - Run the playbook a several times again. Is the server booted again?
 
 ### TASK 6
+- create a variabel `users` like the following:
+```
+users:
+  - name: jim
+    job: apprentice
+  - name: sabrina
+    job: chief
+  - name: hans
+    job: engineer
+  - name: eveline
+    job: chief
+  - name: santos
+```
+- put the vars in an appropiate place to use as a variable later.
+- create a playbook (or a role) doing the following:
+- create a file /etc/employees.txt with the content like this (use a template):
+```
+<name_of_user> <job_of_user>
+```
+- there should be a entry in the file /etc/employees.txt for all users in the variable "users" (use a for loop)
+- if a user has no job specified, use "housekeeper" (have a look at "playbooks_filters" in the online docs)
+- on node1 do create a group for every different job
+- create a user for every user entry in "users" variable. Ensure that this user is also in the group with the same name as his job.  
+
+
+### TASK 7
 - A Millennium Prize Problem!
 - Do create a playbook that creates a /etc/hosts file on all servers containing each server of the inventory with its ip address. The file should look similar to this:
 ```
@@ -183,6 +209,12 @@ Add the following task to your play
 ====
 
 .Solution 6
+[%collapsible]
+====
+Since you are an expert already no detailed solution provided. Discuss your solution with your lab-neighbour and your the teacher. 
+====
+
+.Solution 7
 [%collapsible]
 ====
 Surely, no solution provided for Millenium Prize Problems! :-)
