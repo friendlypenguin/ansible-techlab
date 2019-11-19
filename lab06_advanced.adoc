@@ -59,7 +59,7 @@ users:
   - name: santos
 ```
 - put the vars in an appropiate place to use as a variable later.
-- create a playbook (or a role) doing the following:
+- create a playbook (or a role) doing the following on node2:
 - create a file /etc/employees.txt with the content like this (use a template):
 ```
 <name_of_user> <job_of_user>
@@ -67,7 +67,8 @@ users:
 - there should be a entry in the file /etc/employees.txt for all users in the variable "users" (use a for loop)
 - if a user has no job specified, use "housekeeper" (have a look at "playbooks_filters" in the online docs)
 - on node1 do create a group for every different job
-- create a user for every user entry in "users" variable. Ensure that this user is also in the group with the same name as his job.  
+- create a user for every user entry in "users" variable. Ensure that this user is also in the group with the same name as his job.
+- BONUS: do set the loginshell to /bin/zsh. If (and only if) the user is Santos, disable login. (use a if/else statement)
 
 
 ### TASK 7
