@@ -51,10 +51,8 @@ Delete the 2 tasks "start and enable [httpd,firewalld]". Add a new task with the
 ----
 
 [NOTE]
-====
 Make sure your indentations are correct!
 Older ansible-versions don't know the keyword "loop" yet, use "with_items" instead.
-====
 ====
 
 .Solution 2
