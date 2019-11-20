@@ -1,268 +1,44 @@
-# LAB04 - Ansible Playbooks
+# LAB04.3 - Ansible Playbooks - Templates
 
-In this lab we'll get used to writing and running ansible playbooks.
+In this lab we start to use templates!
 
-### Task 1
-Create a playbook `webserver.yml` which does the following:
-- Install `httpd` on the nodes in the `web` group.
-- Start `httpd` and ensure the service starts on boot. Ensure that the firewall is also started and enabled.
-- Ensure port 80 is open on the `firewall`.
-
-[TIP]
-====
- Check what the options "immediate" and "permanent" mean and do.
-====
-
-- Run the playbook. After completion test if the `httpd.service` is running and enabled on node1.
-
-### TASK 2
-- Create a folder `inventory` and move your inventory `hosts` there.
-- Configure ansible to use `/home/ansible/techlab/hosts` as the default inventory. Do this using a configuration file in the `/home/ansible/techlab/` directory. 
-- Run the playbook again without using the `-i` flag to see if the configuration works.
-
-### TASK 3
-- In your playbook you have two tasks for starting and enabling `httpd` and `firewalld`. Merge these 2 tasks
-  into one.
-
-[TIP]
-====
-Remember `loop:` or the deprecated `with_items:`?
-====
-
-### TASK 4
-- Write a new playbook `motd.yml` which sets the content of `/etc/motd` on all servers to a custom text. Use
-  the variable `motd_content` and the `copy` module with the option `content` containing the variable. 
-
-### TASK 5
-- Using the command line, overwrite the content of `motd` by providing the variable `motd_content` with a different value.
-- Modify the content again, but use a `vars.yml` file.
-
-### TASK 6
-- Set the `motd_content` from task 4 using `group_vars` for node1 and `host_vars` for node 2. 
-- Make sure you remove the variable definition in `motd.yml`. Reason being it will have a higher priority. 
-- Limit the run to node1 and node2. 
-
-[TIP]
-====
-Think about where you have to create the folders for your host and group variables
-====
-
-### TASK 7
-- Rewrite your playbook without using the `copy` module, but rather using the `template` module.
+### TASK 1
+- Rewrite your playbook `motd.yml` without using the `copy` module, but rather using the `template` module.
 - Use a jinja2 template file called `motd.j2` which uses the variable `motd_content`.
 
-### TASK 8
-- Improve the template from task 7 by adding the default ip address of the server to the template. 
+### TASK 2
+- Improve the template `motd.j2` by adding the default ip address of the server to the template. 
 - Add the installed operating system to the motd file aswell.
+
+### TASK 3
+- create a variable `users` like the following:
+```
+users:
+  - name: jim
+    job: apprentice
+  - name: sabrina
+    job: chief
+  - name: hans
+    job: engineer
+  - name: eveline
+    job: chief
+  - name: santos
+```
+- put the vars in an appropiate place of your choosing to use as a variable later.
+- create a playbook `userplay.yml` doing the following on node2:
+- by using a template, create a file /etc/employees.txt with the content like the following:
+```
+<name_of_user> <job_of_user>
+```
+- there should be a entry in the file /etc/employees.txt for all users in the variable "users" (use a for-loop in the template)
+- if a user has no job specified, use "housekeeper" (have a look at "playbooks_filters" in the online docs)
+- on node1 do create a group for every different job in the variable `user`.
+- create a user for every user entry in "users" variable. Ensure that this user is also in the group with the same name as his job.
+- BONUS: do set the loginshell to /bin/zsh. If (and only if) the user is Santos, disable login. (use a if/else statement)
 
 ## Solutions
 
 .Solution 1
-[%collapsible]
-====
-Below is a possible solution for your playbook: 
-
-[shell]
-----
----
-- hosts: web
-  become: yes
-  tasks:
-    - name: install httpd
-      yum:
-        name: httpd
-        state: installed
-    - name: start and enable httpd
-      service:
-        name: httpd
-        state: started
-        enabled: yes
-    - name: start and enable firewalld
-      service:
-        name: firewalld
-        state: started
-        enabled: yes
-    - name: open firewall for http
-      firewalld:
-       service: http
-       state: enabled
-       permanent: yes
-       immediate: yes
-----
-
-Run your playbook with:
-
-[shell]
-----
-$ ansible-playbook -i hosts webserver.yml
-----
-
-Check `httpd.service` on node 1:
-
-[shell]
-----
-$ systemctl status httpd.service 
-● httpd.service - The Apache HTTP Server
-   Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
-   Active: active (running) since Fri 2019-11-01 13:44:25 CET; 2min 41s ago
-     Docs: man:httpd(8)
-...
-...
-====
-
-.Solution 2
-[%collapsible]
-====
-[shell]
-----
-$ mkdir inventory; mv hosts inventory/hosts
-$ cp /etc/ansible/ansible.cfg /home/ansible/techlab/
-----
-
-Edit your `ansible.cfg` file. Uncomment and edit the first "inventory" entry to:
-[shell]
-----
-...
-...
-[defaults]
-
-# some basic default values...
-
-inventory      = /home/ansible/techlab/inventory/hosts # <-- edit this line
-#library        = /usr/share/my_modules/
-...
-...
-----
-
-[shell]
-----
-$ ansible-playbook webserver.yml
-PLAY [web] ***********************************************************************
-
-TASK [Gathering Facts] ***********************************************************
-ok: [node1]
-
-TASK [install httpd] *************************************************************
-ok: [node1]
-...
-...
-----
-====
-
-.Solution 3
-[%collapsible]
-=====
-Delete the 2 tasks "start and enable [httpd,firewalld]". Add a new task with the following content:
-[shell]
-----
-- name: start and enable services
-  service:
-    name: "{{ item }}"
-    state: started
-    enabled: yes
-  with_items:
-    - httpd
-    - firewalld
-----
-
-[NOTE]
-====
-Make sure your indentations are correct!
-Older ansible-versions don't know the keyword "loop" yet, use "with_items" instead.
-====
-=====
-
-.Solution 4
-[%collapsible]
-====
-Content of modt.yml:
-[shell]
-----
----
-- hosts: all
-  become: yes
-  vars:
-    motd_content: "Thi5 1s some r3ally stR4nge teXT!\n"
-  tasks:
-    - name: set content of /etc/motd
-      copy:
-        dest: /etc/motd
-        content: "{{ motd_content }}"
-----
-[shell]
-----
-$ ansible-playbook motd.yml
-----
-Take a look at what your playbook just did:
-[shell]
-----
-$ ssh -l ansible <node1-ip>
-Last login: Fri Nov  1 14:16:08 2019 from 5-102-146-174.cust.cloudscale.ch
-Thi5 1s some r3ally stR4nge teXT! # <-- it worked!
-[ansible@node1 ~]$ 
-----
-====
-
-.Solution 5
-[%collapsible]
-====
-[shell]
-----
-$ ansible-playbook motd.yml --extra-vars motd_content="0th3r_5trang3_TExt"
-
-$ ssh -l ansible <node1-ip>
-Last login: Fri Nov  1 14:18:52 2019 from 5-102-146-174.cust.cloudscale.ch
-0th3r_5trang3_TExt # <-- it worked
-[ansible@node1 ~]$ 
-----
-[shell]
-----
-$ cat vars.yml
----
-motd_content: "st1ll m0r3 str4ng3 TexT!"
-$ ansible-playbook motd.yml --extra-vars @vars.yml
-----
-Login via SSH again and check if the new text was set.
-====
-
-.Solution 6
-[%collapsible]
-====
-Your `motd.yml` should look something like this:
-[shell]
-----
----
-- hosts: all
-  become: yes
-  tasks:
-    - name: set content of /etc/motd
-      copy:
-        dest: /etc/motd
-        content: "{{ motd_content }}"
-----
-After creating the new directories and files you should have something similar to this:
-[shell]
-----
-$ cat inventory/group_vars/web.yml 
----
-motd_content: "This is a webserver\n"
-$ cat inventory/host_vars/node2.yml 
----
-motd_content: "This is node2\n"
-----
-Run your playbook and check if the text was changed accordingly on the two nodes:
-[shell]
-----
-$ ansible-playbook motd.yml -l node1,node2
-
-$ ssh -l ansible <node1-ip>
-Last login: Fri Nov  1 14:26:37 2019 from 5-102-146-174.cust.cloudscale.ch
-This is node2 # <-- worked like a charm
-[ansible@node2 ~]$
-----
-====
-
-.Solution 7
 [%collapsible]
 ====
 Create the file `motd.j2` with the following one liner:
@@ -271,7 +47,7 @@ Create the file `motd.j2` with the following one liner:
 $ cat motd.j2
 {{ motd_content }}
 ----
-Edit your `motd.yml` playbook to something like this:
+Edit your `motd.yml` playbook to use the file `motd.j2`:
 [shell]
 ----
 $ cat motd.yml 
@@ -291,7 +67,7 @@ $ ansible-playbook motd.yml -l node1,node2
 ----
 ====
 
-.Solution 8
+.Solution 2
 [%collapsible]
 ====
 Add IP and OS to `motd.j2`:
@@ -315,4 +91,10 @@ IP ADDRESS:     5.102.146.204
 OS:             RedHat
 [ansible@node2 ~]$ 
 ----
+====
+
+.Solution 3
+[%collapsible]
+====
+Since you are an expert already no detailed solution provided. :-) Discuss your solution with your lab-neighbour and your teacher.
 ====
