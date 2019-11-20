@@ -4,20 +4,21 @@ In this lab we'll get used to writing and running ansible playbooks.
 
 ### Task 1
 Create a playbook `webserver.yml` which does the following:
+
 - Install `httpd` on the nodes in the `web` group.
 - Start `httpd` and ensure the service starts on boot. Ensure that the firewall is also started and enabled.
-- Ensure port 80 is open on the `firewall`.
+- Ensure port 80 is open on the firewall.
 
 [TIP]
 ====
- Check what the options "immediate" and "permanent" mean and do.
+ Check what the options "immediate" and "permanent" of the service module mean and do.
 ====
 
 - Run the playbook. After completion test if the `httpd.service` is running and enabled on node1.
 
 ### TASK 2
-- Create a folder `inventory` and move your inventory `hosts` there.
-- Configure ansible to use `/home/ansible/techlab/hosts` as the default inventory. Do this using a configuration file in the `/home/ansible/techlab/` directory. 
+- Create a folder `/home/ansible/techlab/inventory` and move your inventory-file `hosts` there.
+- Configure ansible to use `/home/ansible/techlab/inventory/hosts` as the default inventory. Do this using a configuration file in the `/home/ansible/techlab/` directory. 
 - Run the playbook again without using the `-i` flag to see if the configuration works.
 
 ### TASK 3
@@ -113,9 +114,11 @@ $ systemctl status httpd.service
 .Solution 2
 [%collapsible]
 ====
+Copy the default ansible.cfg to your directory:
 [shell]
 ----
-$ mkdir inventory; mv hosts inventory/hosts
+$ mkdir /home/ansible/techlab/inventory
+$ mv /home/ansible/techlab/hosts /home/ansible/techlab/inventory
 $ cp /etc/ansible/ansible.cfg /home/ansible/techlab/
 ----
 
@@ -123,14 +126,10 @@ Edit your `ansible.cfg` file. Uncomment and edit the first "inventory" entry to:
 [shell]
 ----
 ...
-...
 [defaults]
-
 # some basic default values...
-
 inventory      = /home/ansible/techlab/inventory/hosts # <-- edit this line
 #library        = /usr/share/my_modules/
-...
 ...
 ----
 
@@ -144,7 +143,6 @@ ok: [node1]
 
 TASK [install httpd] *************************************************************
 ok: [node1]
-...
 ...
 ----
 ====
