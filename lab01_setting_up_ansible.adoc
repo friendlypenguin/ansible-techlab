@@ -30,11 +30,6 @@ Do this now and then continue with the installation of Ansible.
 
 Use your favourite ssh-client to connect to the ip of your control host as user ansible
 
-[shell]
-----
-# ssh -l ansible <ip_of_control_host>
-----
-
 
 ### TASK 1
 - Install all packages needed to use ansible on the controller.
@@ -167,7 +162,7 @@ $ ansible all -i hosts -m ping
 .Solution 4
 [%collapsible]
 =====
-Create a line in `/etc/sudoers` similar to the one for the `%wheel` group on all nodes.  
+In the file `/etc/sudoers` (On CentOS/RHEL), theres already a config entry for the wheel group that is similar to the one we need for our ansible user.
 
 [shell]
 ----
@@ -188,6 +183,6 @@ sudo -v
 
 [NOTE]
 ====
-Note that you cannot do this using ansible yet. The reason being you need root privileges and we are just setting this up right now.  
+You cannot do this using ansible yet. The reason being you need root privileges and we are just setting this up right now.  
 ====
 =====
