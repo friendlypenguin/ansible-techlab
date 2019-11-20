@@ -24,7 +24,7 @@ Remember `loop:` or `with_items:`
 
 ### TASK 5
 - Set the value of `motd_content` using `group_vars` for node1 and `host_vars` for node 2. 
-- Make sure there is no variable definition in `motd.yml`. Reason being it will have a higher priority. 
+- Make sure there is no variable definition of `motd_content` in `motd.yml`. Reason being it will have a higher priority. 
 - Limit the run to node1 and node2. 
 
 [TIP]
