@@ -1,4 +1,4 @@
-# LAB03 - Ansible setup and ad hoc commands
+# LAB03 - Ansible Setup and Ad Hoc Commands
 
 In this lab we'll continue with our environment setup and learn how to run ad hoc commands.
 

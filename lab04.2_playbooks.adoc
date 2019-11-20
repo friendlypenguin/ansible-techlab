@@ -1,4 +1,4 @@
-# LAB04.2 - Ansible Playbooks - Variables and loops
+# LAB04.2 - Ansible Playbooks - Variables and Loops
 
 In this lab we'll get used to writing and running ansible playbooks.
 

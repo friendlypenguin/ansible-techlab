@@ -1,4 +1,4 @@
-# LAB02 - Documentation and finding information
+# LAB02 - Documentation and Finding Information
 
 ### Task 1
 - Print out a list of all ansible modules in your terminal

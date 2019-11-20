@@ -1,0 +1,186 @@
+# LAB05.1 - Ansible Roles
+
+During this we'll learn how to write and use ansible roles.
+
+### Task 1
+- Create a directory `roles` in your techlab folder.
+- Configure your ansible environment to use the `roles` folder as source for roles.
+
+### TASK 2
+Write a `webserver` role in your new `roles` folder which does the following:
+
+- Install `httpd`,  start its service and enable it to run on boot. 
+- Install `firewalld` and allow traffic for the services `http` and `https`.
+
+### TASK 3
+- Modify your playbook `webserver.yml` from lab04 to use your new `webserver` role. It should be run on all hosts in the `web` group. 
+- Run your playbook  and check if everything went as expected.
+
+### TASK 4
+Create a new role called `base`. It's `main.yml` should import the following taskfiles:
+[.result]
+====
+* `motd.yml`:
+  ** Use the variable `motd_content` to change the `/etc/motd` content to "This is a server\n". Remember to
+    move the template to correct location in the `roles` folder.
+* `packages.yml` which has to install:
+  ** firewalld
+  ** yum-utils
+  ** dos2unix
+  ** emacs
+  ** vim
+* Write a `prod.yml` playbook which:
+  ** Applies the `base` role to all servers
+  ** Only applies the `webserver` role to the group `web`
+====
+
+### TASK 5
+- Rewrite the `webserver` role to apply the `base` role each time it is used in a playbook. ("Dependency")
+- Run the playbook and see if role `base` was applied as well.
+
+## Solutions
+
+.Solution 1
+[%collapsible]
+====
+[shell]
+----
+$ mkdir roles
+$ grep roles_path ansible.cfg 
+roles_path    = /etc/ansible/roles:/usr/share/ansible/roles:/home/ansible/techlab/roles
+----
+====
+
+.Solution 2
+[%collapsible]
+====
+[shell]
+----
+$ cd roles/
+$ ansible-galaxy init webserver
+
+$ cat roles/webserver/tasks/main.yml 
+---
+# tasks file for webserver
+- name: install packaged
+  yum:
+    name:
+      - httpd
+      - firewalld
+    state: installed
+- name: start services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - httpd
+    - firewalld
+- name: open firewall for http and https
+  firewalld:
+    service: "{{ item }}"
+    state: enabled
+    immediate: yes
+    permanent: true
+  with_items:
+    - http
+    - https
+----
+====
+
+.Solution 3
+[%collapsible]
+====
+[shell]
+----
+$ cat webserver.yml 
+---
+- hosts: web
+  become: yes
+  roles:
+    - webserver
+
+$ ansible-playbook webserver.yml
+----
+====
+
+.Solution 4
+[%collapsible]
+=====
+[shell]
+----
+$ cd roles/; ansible-galaxy init base;
+
+$ cat roles/base/defaults/main.yml 
+---
+# defaults file for base
+motd_content: "This is a server\n"
+
+$ ls roles/base/tasks/
+main.yml      motd.yml      packages.yml  
+
+$ cat roles/base/tasks/motd.yml 
+---
+- name: put motd template
+  template:
+    src: templates/motd.j2
+    dest: /etc/motd
+
+$ cat roles/base/tasks/packages.yml 
+---
+- name: install packages
+  yum:
+    name:
+      - firewalld
+      - yum-utils
+      - dos2unix
+      - emacs
+      - vim 
+    state: installed
+
+$ cat roles/base/tasks/main.yml 
+---
+# tasks file for base
+- name: set custom text
+  include: motd.yml
+  tags: motd
+- name: install packages
+  include: packages.yml
+  tags: packages
+
+$ cat prod.yml
+---
+- hosts: all
+  become: yes
+  roles:
+    - base
+
+- hosts: web
+  become: yes
+  roles:
+    - webserver
+----
+
+[NOTE]
+====
+Take notice the of different content of `/etc/motd` on the control node!
+====
+=====
+.Solution 5
+[%collapsible]
+====
+[shell]
+----
+$ cat roles/webserver/meta/main.yml
+dependencies:
+  - base
+$ cat prod.yml 
+---
+- hosts: web
+  become: yes
+  roles:
+    - webserver
+
+$ ansible-playbook prod.yml
+----
+====
