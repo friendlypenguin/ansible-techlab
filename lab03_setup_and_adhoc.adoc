@@ -1,6 +1,6 @@
 # LAB03 - Ansible setup and ad hoc commands
 
-In this lab we'll continue with our environment setup from lab01 and learn how to run ad hoc commands.
+In this lab we'll continue with our environment setup and learn how to run ad hoc commands.
 
 ### TASK 1
 - Ping all nodes in the inventory file using the ping module
@@ -95,7 +95,7 @@ $ ansible all -i hosts -m setup -a "filter=ansible_default_ipv4"
 [%collapsible]
 ====
 - https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html
-- `inventory_hostname` can be set to the hostname on the servers.
+- `inventory_hostname` can be used to set the hostname on the servers.
 ====
 
 .Solution 4
