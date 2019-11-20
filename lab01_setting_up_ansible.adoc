@@ -41,7 +41,7 @@ Use your favourite ssh-client to connect to the ip of your control host as user 
 
 [TIP]
 ====
-Use `sudo ` to elevate your privilege to that of `root`. Be sure to do the rest of the lab as user ansible.
+Use `sudo` to elevate your privilege to that of `root`. Be sure to do the rest of the lab as user ansible.
 ====
 
 - Test if you can connect to the nodes from your controller using SSH. Use their public IPs you received from
@@ -54,7 +54,7 @@ Use `sudo ` to elevate your privilege to that of `root`. Be sure to do the rest 
 - Test the login on the nodes.
 
 ### TASK 3
-- Create an inventory `hosts` file in your working directory with your public IPs:
+- Create an inventory file called `hosts` in your working directory with your public IPs:
 
 [ini]
 ----  
