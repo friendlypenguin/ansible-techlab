@@ -36,7 +36,7 @@ Think about where you have to create the folders for your host and group variabl
 
 .Solution 1
 [%collapsible]
-=====
+====
 Delete the 2 tasks "start and enable [httpd,firewalld]". Add a new task with the following content:
 [shell]
 ----
@@ -55,9 +55,10 @@ Delete the 2 tasks "start and enable [httpd,firewalld]". Add a new task with the
 Make sure your indentations are correct!
 Older ansible-versions don't know the keyword "loop" yet, use "with_items" instead.
 ====
-=====
+====
 
 .Solution 2
+[%collapsible]
 ====
 [shell]
 ----
