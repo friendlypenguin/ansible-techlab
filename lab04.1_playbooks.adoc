@@ -22,8 +22,9 @@ Create a playbook `webserver.yml` which does the following:
 - Run the playbook `webserver.yml` again without using the `-i` flag to see if the configuration works.
 
 ### TASK 3
-- In your playbook you have two tasks for starting and enabling `httpd` and `firewalld`. Merge these 2 tasks
-  into one.
+Add intentionally errors to your plabook and have a look at the output. You should get a feeling for errormessages.
+- add a wrong intendation
+- add a wrong parameter name
 
 [TIP]
 ====
@@ -123,23 +124,32 @@ ok: [node1]
 
 .Solution 3
 [%collapsible]
-=====
-Delete the 2 tasks "start and enable [httpd,firewalld]". Add a new task with the following content:
+====
+Wrong intendation:
 [shell]
 ----
-- name: start and enable services
-  service:
-    name: "{{ item }}"
-    state: started
-    enabled: yes
-  with_items:
-    - httpd
-    - firewalld
+---
+- hosts: web
+  become: yes
+  tasks:
+    - name: install httpd
+      yum:
+      name: httpd	# <--  
+      state: installed  # <-- 
 ----
 
-[NOTE]
+Wrong parameter name:
+[shell]
+----
+---
+- hosts: web
+  become: yes
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: installed
+        enabled: yes     # <-- doesn't exist for service module
+----
+
 ====
-Make sure your indentations are correct! The keyword `with_items` or `loop` is not part of the service-module itself, so its not on the same highth as the module-parameters (`state` or `enabled`).
-Older ansible-versions don't know the keyword "loop" yet, use "with_items" instead.
-====
-=====
