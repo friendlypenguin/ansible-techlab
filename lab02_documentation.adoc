@@ -42,12 +42,18 @@ $ ansible-doc -s file
 [%collapsible]
 ====
 
-One way to find a list of provided documentation:
+One way to find a list of provided documentation is to search for files installed with the ansible-doc package:
 
 [shell]
 ----
-$ yum install -y yum-utils # (if needed)
+$ sudo yum install -y yum-utils # (if needed, this package provides the repoquery command)
 $ repoquery ansible-doc -l
+----
+
+You can also search for files in `/usr/share/doc`:
+[shell]
+----
 $ ll -R /usr/share/doc/ | grep jinja2
 ----
+
 ====
