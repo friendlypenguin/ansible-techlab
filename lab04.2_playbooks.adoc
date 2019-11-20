@@ -24,7 +24,7 @@ Remember `loop:` or `with_items:`
 
 ### TASK 5
 - Set the value of `motd_content` using `group_vars` for node1 and `host_vars` for node 2. 
-- Make sure you remove the variable definition in `motd.yml`. Reason being it will have a higher priority. 
+- Make sure there is no variable definition in `motd.yml`. Reason being it will have a higher priority. 
 - Limit the run to node1 and node2. 
 
 [TIP]
@@ -62,7 +62,7 @@ Older ansible-versions don't know the keyword "loop" yet, use "with_items" inste
 ----
 ...
 tasks:
-    - name: install httpd
+    - name: install httpd and firewalld
       yum:
         name:
           - httpd
@@ -76,7 +76,7 @@ https://docs.ansible.com/ansible/latest/modules/yum_module.html#yum-module
 .Solution 3
 [%collapsible]
 ====
-Content of modt.yml:
+Content of motd.yml:
 [shell]
 ----
 ---
