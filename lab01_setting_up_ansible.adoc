@@ -5,11 +5,13 @@ your first commands on the ansible-nodes.
 
 You have the IPs of the controller host and managemeble nodes. (given by your instructor). The controller host is where you execute Ansible from and the nodes represent the machines you like to manage.
 
-To make it as easier for inexperienced users we installed an editor and terminal accessible with your browser:
+To make it easier for inexperienced users we installed an editor and terminal accessible with your browser:
 
-## Open your Browser
+## Connect to your control host
 
-Copy and paste the following URL and replace `<controller-ip>` with the IP of your controller host:
+### Webbrowser
+
+Connect to your control host by pasting the dns-name into your webbroser
 
 ----
 https://<dnsname>
@@ -24,13 +26,22 @@ password: << web password >>
 After a successful login you should see an editor similar to _visual studio code_ in your browser. In the navigation bar you can open "Terminal" or press `ctrl-shift-^` to open a terminal. 
 Do this now and then continue with the installation of Ansible.
 
+### SSH
+
+Use your favourite ssh-client to connect to the ip of your control host as user ansible
+
+[shell]
+----
+# ssh -l ansible <ip_of_control_host>
+----
+
+
 ### TASK 1
 - Install all packages needed to use ansible on the controller.
 
 [TIP]
 ====
-Use `sudo -s` to elevate your privilege to that of `root`. The `-s` parameter keeps you in your current
-working directory.
+Use `sudo ` to elevate your privilege to that of `root`. Be sure to do the rest of the lab as user ansible.
 ====
 
 - Test if you can connect to the nodes from your controller using SSH. Use their public IPs you received from
