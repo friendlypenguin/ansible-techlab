@@ -17,17 +17,12 @@ Create a playbook `webserver.yml` which does the following:
 
 ### TASK 2
 - Create a folder `inventory` and move your inventory `hosts` there.
-- Configure ansible to use `/home/ansible/techlab/hosts` as the default inventory. Do this using a configuration file in the `/home/ansible/techlab/` directory. 
+- Configure ansible to use `/home/ansible/techlab/inventory/hosts` as the default inventory. Do this using a configuration file in the `/home/ansible/techlab/` directory. 
 - Run the playbook again without using the `-i` flag to see if the configuration works.
 
 ### TASK 3
 - In your playbook you have two tasks for starting and enabling `httpd` and `firewalld`. Merge these 2 tasks
   into one.
-
-[TIP]
-====
-Remember `loop:` or the deprecated `with_items:`?
-====
 
 ### TASK 4
 - Write a new playbook `motd.yml` which sets the content of `/etc/motd` on all servers to a custom text. Use
