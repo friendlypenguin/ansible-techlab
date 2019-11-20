@@ -2,7 +2,7 @@
 
 In this lab we'll get used to writing and running ansible playbooks.
 
-### Task 2
+### Task 1
 Create a playbook `webserver.yml` which does the following:
 
 - Install `httpd` on the nodes in the `web` group.
@@ -16,12 +16,12 @@ Create a playbook `webserver.yml` which does the following:
 
 - Run the playbook. After completion test if the `httpd.service` is running and enabled on node1.
 
-### TASK 3
+### TASK 2
 - Create a folder `/home/ansible/techlab/inventory` and move your inventory-file `hosts` there.
 - Configure ansible to use `/home/ansible/techlab/inventory/hosts` as the default inventory. Do this using a configuration file in the `/home/ansible/techlab/` directory. 
 - Run the playbook `webserver.yml` again without using the `-i` flag to see if the configuration works.
 
-### TASK 4
+### TASK 3
 - In your playbook you have two tasks for starting and enabling `httpd` and `firewalld`. Merge these 2 tasks
   into one.
 
