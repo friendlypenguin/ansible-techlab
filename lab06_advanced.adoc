@@ -2,14 +2,18 @@
 
 In this lab we will learn to use more ansible magic!
 
+### Task 0
+- If not done yet, do install ansible-lint
+- check your yaml files for syntax errors with ansible-lint
+
 ### Task 1
 - Write a `download.yml` playbook which tries to download something from a non-existing URL onto node2.
 - The playbook should be able to handle errors. Make the playbook output the message _"Download failed!"_ if
-  the `download` task failed. The playbook bust keep on running and not exit after this message.
+  the `download` task failed. The playbook bust keep on running and shall not exit after this message.
 - Output a message at the end of the play informing you the download attempt has finished.
 
 ### TASK 2
-- Write a playbook which installs multiple packages containing a service.
+- Write a playbook which installs multiple yum packages containing a service (f.e. httpd).
 - start those services in the same playbook using a loop.
 
 [TIP]
@@ -17,8 +21,77 @@ In this lab we will learn to use more ansible magic!
  Check if you really need a loop when installing multiple packages.
 ====
 
-## Solutions
+### Task 3
+- Create a playbook `myhandler.yml` which does the following:
+- Create a directory `newdir` in the folder `/home/ansible` of node1.
+- if the folder didn't exist before, then do create a file `README.TXT` in this folder containing the text "This folder was created at <timestamp>"
+- the value of timestamp should contain a quite accurate timestamp of when `ansible-playbook` was run.
+- run the playbook several times to see if it is really idempotent.
 
+[TIP]
+====
+ Remember to use facts. Be aware that there is not one single valid solution. Do decide yourself what you think solves the problem best.
+====
+
+### TASK 4
+- Do extend your playbook to do the following:
+- If the uptime of the server is higher than one hour, then do reboot the server.
+- Run the playbook a second time. Is the reboot-task skipped now?
+
+### TASK 5
+- Create a playbook, that is run on all servers.
+- The playbook should contain a task, that installs the package `atop` on all servers that belong to the group `web` in its name.
+- When the package gets installed, then do also reboot the server. Don't reboot if the package was already installed.
+- Run the playbook a several times again. Is the server booted again?
+
+### TASK 6
+- create a variabel `users` like the following:
+```
+users:
+  - name: jim
+    job: apprentice
+  - name: sabrina
+    job: chief
+  - name: hans
+    job: engineer
+  - name: eveline
+    job: chief
+  - name: santos
+```
+- put the vars in an appropiate place to use as a variable later.
+- create a playbook (or a role) doing the following on node2:
+- create a file /etc/employees.txt with the content like this (use a template):
+```
+<name_of_user> <job_of_user>
+```
+- there should be a entry in the file /etc/employees.txt for all users in the variable "users" (use a for loop)
+- if a user has no job specified, use "housekeeper" (have a look at "playbooks_filters" in the online docs)
+- on node1 do create a group for every different job
+- create a user for every user entry in "users" variable. Ensure that this user is also in the group with the same name as his job.
+- BONUS: do set the loginshell to /bin/zsh. If (and only if) the user is Santos, disable login. (use a if/else statement)
+
+
+### TASK 7
+- A Millennium Prize Problem!
+- Do create a playbook that creates a /etc/hosts file on all servers containing each server of the inventory with its ip address. The file should look similar to this:
+```
+3.4.5.6    controller
+7.8.9.1    node1
+5.4.3.2    node2
+```
+
+Be sure that this file is dynamic: When you add an additional node to the inventory, then a further playbook-run should add a corresponding entry to /etc/hosts on all nodes.
+
+## Solutions
+.Solution 1
+[%collapsible]
+====
+[shell]
+----
+sudo yum install -y ansible-lint
+ansible-lint <yourfile>.yml
+----
+====
 .Solution 1
 [%collapsible]
 ====
@@ -72,4 +145,78 @@ $ cat services.yml
         - chronyd
         - auditd
 ----
+====
+
+.Solution 3
+[%collapsible]
+====
+Below is a possible solution for your playbook: 
+
+[shell]
+----
+---
+- hosts: node1
+  become: yes
+  tasks:
+    - name: create directory
+      file:
+        path: /home/ansible/newdir
+        state: directory
+      notify: timestamp
+
+  handlers:
+    - name: create readme with timestamp 
+      copy:
+        dest: /home/ansible/techlab/newdir/README.TXT
+        content: "This folder was created at {{ ansible_date_time.iso8601 }}"    
+      listen: timestamp
+----
+
+If you are unsure how to run your playbook, then have a look at the earlier labs.
+====
+
+
+.Solution 4
+[%collapsible]
+====
+Add the following task to your play
+[shell]
+----
+    - name: reboot if longer than one hour up
+      reboot:
+      when: ansible_uptime_seconds >= '3600'
+----
+====
+
+.Solution 5
+[%collapsible]
+====
+[shell]
+----
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: install atop
+      yum:
+        name: atop
+      notify: reboot
+      when: "'web' in group_names"
+
+  handlers:
+    - name: reboot
+      reboot:
+----
+====
+
+.Solution 6
+[%collapsible]
+====
+Since you are an expert already no detailed solution provided. Discuss your solution with your lab-neighbour and your the teacher. 
+====
+
+.Solution 7
+[%collapsible]
+====
+Surely, no solution provided for Millenium Prize Problems! :-)
 ====

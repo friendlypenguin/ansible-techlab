@@ -4,7 +4,7 @@ During this we'll learn how to write and use ansible roles.
 
 ### Task 1
 - Create a directory `roles` in your techlab folder.
-- Configure your ansible environment to use the `roles` folder as you did in a previous lab.
+- Configure your ansible environment to use the `roles` folder as source for roles.
 
 ### TASK 2
 Write a `webserver` role in your new `roles` folder which does the following:
@@ -13,7 +13,7 @@ Write a `webserver` role in your new `roles` folder which does the following:
 - Install `firewalld` and allow traffic for the services `http` and `https`.
 
 ### TASK 3
-- Modify your playbook `webserver.yml` to use your new `webserver` role. It should be run on all hosts in the `web` group. 
+- Modify your playbook `webserver.yml` from lab04 to use your new `webserver` role. It should be run on all hosts in the `web` group. 
 - Run your playbook  and check if everything went as expected.
 
 ### TASK 4
@@ -35,8 +35,16 @@ Create a new role called `base`. It's `main.yml` should import the following tas
 ====
 
 ### TASK 5
-- Rewrite the `webserver` role to apply the `base` role each time it is used in a playbook. 
+- Rewrite the `webserver` role to apply the `base` role each time it is used in a playbook. ("Dependency")
 - Run the playbook and see if role `base` was applied as well.
+
+### TASK 6
+- Now, lets get creative yourself.
+- Think about a functionality you would like to bundle as a role.
+- Do try to create this role.
+
+### TASK 7 - Sysadmins only
+- Create a role `samba`, that provides a sambashare to use with a user `sambauser`. This task is hard! Do provide passwords in cleartext here. We will learn later how to use Ansible-Vault. 
 
 ## Solutions
 
@@ -183,4 +191,16 @@ $ cat prod.yml
 
 $ ansible-playbook prod.yml
 ----
+====
+
+.Solution 6
+[%collapsible]
+====
+Do ask the teacher for help.
+====
+
+.Solution 7
+[%collapsible]
+====
+No solutions for difficult tasks :-)
 ====
