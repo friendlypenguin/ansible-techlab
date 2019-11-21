@@ -3,18 +3,20 @@
 We start to use handlers and blocks as well.
 
 ### TASK 1
-- Create a playbook `myhandler.yml` which that uses a role `handlerrole`.
+- Create a playbook `myhandler.yml` which uses a role `handlerrole`.
 - The role `handlerrole` should do the following:
-- Create a directory `newdir` in the folder `/home/ansible` of node1.
-- if the folder didn't exist before, then do create a file `README.TXT` in this folder containing the text "This folder was created at <timestamp>"
-- the value of timestamp should contain a quite accurate timestamp of when `ansible-playbook` was run.
-- run the playbook several times to see if it is really idempotent.
+- Create a directory `newdir` in the folder `/home/ansible`.
+- If the folder didn't exist before, then do create a file `README.TXT` in this folder containing the text "This folder was created at <timestamp>"
+- The value of timestamp should contain a quite accurate timestamp of when `ansible-playbook` was run.
+- Run the playbook several times on node1 to see if it is really idempotent.
 
 ### Task 2
-- Write a `download.yml` playbook which tries to download something from a non-existing URL onto node2. If you like to, write it a role doing the same.
+- Write a `download.yml` playbook which runs a role `downloader`.
+- The role `downloader` should try to download a file from a non-existing URL.
 - The playbook should be able to handle errors. Make the playbook output the message _"Download failed!"_ if
-  the `download` task failed. The playbook bust keep on running and shall not exit after this message.
-- Output a message at the end of the play informing you the download attempt has finished.
+  the `download` task failed. The playbook must keep on running and shall not exit after this message.
+- In all cases, output a message at the end of the play informing you the download attempt has finished.
+- Use a Block.
 
 
 ## Solutions
@@ -61,7 +63,7 @@ $ cat download.yml
   become: yes
   tasks:
     - block:
-        - name: Download random things from the internet
+        - name: Download things from the internet
           get_url:
             url: http://www.asdfasdfasppppakdd.com/file
             dest: /tmp/
