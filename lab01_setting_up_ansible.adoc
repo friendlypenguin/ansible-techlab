@@ -51,11 +51,6 @@ Use `sudo` to elevate your privilege to that of `root`. Be sure to only use root
 ### TASK 3
 - Create an inventory file called `hosts` in your working directory with your public IPs:
 
-### TASK 4
-- Configure the `ansible` user to have root privilege on all hosts in your inventory file. Also enable login
-  without a password for this user.
-- Test the functionality by running `sudo -v` as user `ansible` on all nodes.
-
 [ini]
 ----  
 [tower]
