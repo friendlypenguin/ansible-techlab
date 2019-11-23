@@ -13,7 +13,7 @@ Write a `httpd` role in your new `roles` folder which does the following:
 - Install `firewalld` and allow traffic for the services `http` and `https`.
 
 ### TASK 3
-- Modify your playbook `webserver.yml` from lab04 to use your new `httpd` role. It should be run on all hosts in the `web` group. 
+- Modify your playbook `webserver.yml` from the earlier labs to use your new `httpd` role. It should be run on all hosts in the `web` group. 
 - Run your playbook  and check if everything went as expected.
 
 ### TASK 4
@@ -21,8 +21,7 @@ Write a `httpd` role in your new `roles` folder which does the following:
 [.result]
 ====
 * `motd.yml`:
-  ** Use the variable `motd_content` to change the `/etc/motd` content to "This is a server\n". Remember to
-    move the template to correct location in the `roles` folder.
+  ** Use the template `motd.j2` from the labs before to create the file `/etc/motd`. Remember to move the template to the correct location in the `roles` folder
 * `packages.yml` which has to install:
   ** firewalld
   ** yum-utils
@@ -36,8 +35,8 @@ Write a `httpd` role in your new `roles` folder which does the following:
 ** Only applies the `webserver` role to the group `web`
 
 ### TASK 5
-- Rewrite the `webserver` role to apply the `base` role each time it is used in a playbook. ("Dependency")
-- Run the playbook and see if role `base` was applied as well.
+- Rewrite the `httpd` role to apply the `base` role each time it is used in a playbook. ("Dependency")
+- Remove the play to run `base` role on all hosts in the `prod.yml` playbook. Run the playbook and see if role `base` was applied on hosts in the `web` group as well.
 
 ## Solutions
 
@@ -57,8 +56,7 @@ roles_path    = /etc/ansible/roles:/usr/share/ansible/roles:/home/ansible/techla
 ====
 [shell]
 ----
-$ cd roles/
-$ ansible-galaxy init httpd
+$ ansible-galaxy init roles/httpd
 
 $ cat roles/httpd/tasks/main.yml 
 ---
@@ -110,7 +108,7 @@ $ ansible-playbook webserver.yml
 =====
 [shell]
 ----
-$ cd roles/; ansible-galaxy init base;
+$ ansible-galaxy init roles/base;
 
 $ cat roles/base/defaults/main.yml 
 ---
@@ -125,7 +123,11 @@ $ cat roles/base/tasks/motd.yml
 - name: put motd template
   template:
     src: templates/motd.j2
-    dest: /etc/motd
+
+$ cat roles/base/templates/motd.j2 
+{{ motd_content }}
+IP ADDRESS:	{{ ansible_default_ipv4.address }}
+OS:		{{ ansible_os_family }}    dest: /etc/motd
 
 $ cat roles/base/tasks/packages.yml 
 ---
@@ -144,10 +146,8 @@ $ cat roles/base/tasks/main.yml
 # tasks file for base
 - name: set custom text
   include: motd.yml
-  tags: motd
 - name: install packages
   include: packages.yml
-  tags: packages
 
 $ cat prod.yml
 ---
@@ -161,6 +161,11 @@ $ cat prod.yml
   roles:
     - httpd
 ----
+Run the playbook!
+[shell]
+----
+$ ansible-playbook prod.yml
+----
 
 [NOTE]
 ====
@@ -173,15 +178,17 @@ Take notice of the different content of `/etc/motd` on the control node!
 ====
 [shell]
 ----
-$ cat roles/webserver/meta/main.yml
+$ cat
+---
 dependencies:
   - base
+
 $ cat prod.yml 
 ---
 - hosts: web
   become: yes
   roles:
-    - webserver
+    - httpd
 
 $ ansible-playbook prod.yml
 ----
