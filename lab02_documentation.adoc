@@ -1,4 +1,4 @@
-# LAB02 - Documentation and finding information
+# LAB02 - Documentation and Finding Information
 
 ### Task 1
 - Print out a list of all ansible modules in your terminal
@@ -13,10 +13,11 @@ Don't be rattled about the massive amount of modules you'll see in your terminal
 ### TASK 2
 - Find the official online documentation of ansible in your browser
 - Visit the module index (e.g. list of all modules) in the online documentation
+- Use the search field in the upper left of the webpage and also use the search field in the lower right
 
 ### TASK 3 (Advanced)
-- Find documentation provided by the corresponding package, but not provided by the command used from Task 1
-- Find documentation about jinja2
+- Find documentation provided by the `ansible-doc` yum package, but not provided by the command itself
+- Find documentation about jinja2 on the controller
 
 ## Solutions
 
@@ -42,12 +43,18 @@ $ ansible-doc -s file
 [%collapsible]
 ====
 
-One way to find a list of provided documentation:
+One way to find a list of provided documentation is to search for files installed with the ansible-doc package:
 
 [shell]
 ----
-$ yum install -y yum-utils # (if needed)
+$ sudo yum install -y yum-utils # (if needed, this package provides the repoquery command)
 $ repoquery ansible-doc -l
+----
+
+You can also search for files in `/usr/share/doc`:
+[shell]
+----
 $ ll -R /usr/share/doc/ | grep jinja2
 ----
+
 ====
