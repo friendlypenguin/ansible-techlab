@@ -3,12 +3,12 @@
 In this lab we start to use templates!
 
 ### TASK 1
-- Rewrite your playbook `motd.yml` without using the `copy` module, but rather using the `template` module.
-- Use a jinja2 template file called `motd.j2` which uses the variable `motd_content`.
+- Rewrite your playbook `motd.yml` without using the `copy` module, but rather using the `template` module
+- Use a jinja2 template file called `motd.j2` which uses the variable `motd_content`
 
 ### TASK 2
 - Improve the template `motd.j2` by adding the default ip address of the server to the template. 
-- Add the installed operating system to the motd file aswell.
+- Add the installed operating system to the motd file aswell
 
 ### TASK 3 (Advanced)
 - Create a variable `users` like the following:
@@ -25,17 +25,17 @@ users:
   - name: santos
 ```
 - Put the variable in an appropiate place of your choosing
-- Create a playbook `userplay.yml` doing the following on node2:
+- Create a playbook `userplay.yml` doing the following on node1:
 - Create a file /etc/employees.txt with the content below by using the ansible module `template`:
 ```
 <name_of_user> <job_of_user>
 ```
-- There should be a entry in the file /etc/employees.txt for each user in the variable "users" (use a for-loop in the template)
+- There should be a entry in the file /etc/employees.txt for each user in the variable `users` (use a for-loop in the template)
 - If a user has no job specified, use "housekeeper" (have a look at "playbooks_filters" in the online docs)
-- On node1 do create a group for every different job in the variable `user`.
-- Create a user on node1 for every user entry in the "users" variable. Ensure that this user is also in the group with the same name as his job.
-- BONUS: set the loginshell to /bin/zsh.
-- BONUS: if (and only if) the user is Santos, disable login. (use a if/else statement in the template)
+- On node2 the same playbook `userplay.yml` should create a (linux) group for every different job specified in the variable `users`. If a user has no job defined, create the group `housekeeper` instead
+- Create a user on node2 for every user entry in the `users` variable. Ensure that this user is also in the group with the same name as his job. Again, if no job defined for this user, add group `housekeeper`
+- BONUS: set the loginshell to /bin/zsh
+- BONUS: if (and only if) the user is `santos`, disable login (means set the shell to `/usr/sbin/nologin` and use a if/else statement in the template to do so)
 
 ## Solutions
 
@@ -97,5 +97,87 @@ OS:             RedHat
 .Solution 3
 [%collapsible]
 ====
-Since you are an expert already no detailed solution provided. :-) Discuss your solution with your lab-neighbour and your teacher.
+Be aware that there are multiple possible solutions.
+[shell]
+----
+$ pwd
+/home/ansible/techlab
+
+$ cat uservars.yml
+users:
+  - name: jim
+    job: apprentice
+  - name: sabrina
+    job: chief
+  - name: hans
+    job: engineer
+  - name: eveline
+    job: chief
+  - name: santos
+ 
+$ cat userplay.yml 
+---
+- hosts: node1
+  become: yes
+  vars_files:
+    - uservars.yml
+  tasks:
+    - name: put template
+      template:
+        src: user_template.j2
+        dest: /etc/employees.txt
+
+- hosts: node2
+  become: yes
+  vars_files:
+    - uservars.yml
+  tasks:
+    - name: create groups
+      group:
+        name: "{{ item.job | default('housekeeper') }}"
+      with_items: "{{ users }}"
+    - name: ensure zsh is installed
+      yum:
+        name: zsh
+        state: installed
+    - name: create users
+      user:
+        name: "{{ item.name }}"
+        group: "{{ item.job | default('housekeeper') }}"
+        append: yes
+        shell: "{% if item.name == 'santos' %}/usr/sbin/nologin{% else %}/usr/bin/zsh{% endif %}"
+      with_items: "{{ users }}"
+
+$ cat user_template.j2
+{% for person in users %}
+{{ person.name }}               {{ person.job | default('housekeeper') }}
+{% endfor %}
+----
+Check on node1 (as user root) if everthing is as expected:
+[shell]
+----
+# cat /etc/employees.txt 
+jim         apprentice
+sabrina     chief
+hans        engineer
+eveline     chief
+santos      housekeeper
+----
+Check as well on node2 (as user root):
+[shell]
+----
+# grep  'jim\|sabrina\|hans\|eveline\|santos' /etc/passwd
+jim:x:1002:1002::/home/jim:/usr/bin/zsh
+sabrina:x:1003:1003::/home/sabrina:/usr/bin/zsh
+hans:x:1004:1004::/home/hans:/usr/bin/zsh
+eveline:x:1005:1003::/home/eveline:/usr/bin/zsh
+santos:x:1006:1005::/home/santos:/usr/sbin/nologin
+
+# grep  'apprentice\|chief\|engineer\|housekeeper' /etc/group
+apprentice:x:1002:
+chief:x:1003:
+engineer:x:1004:
+housekeeper:x:1005:
+----
+
 ====

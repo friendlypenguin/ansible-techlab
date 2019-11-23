@@ -94,7 +94,7 @@ Copy the default ansible.cfg to your directory:
 [shell]
 ----
 $ mkdir /home/ansible/techlab/inventory
-$ mv /home/ansible/techlab/hosts /home/ansible/techlab/inventory
+$ mv /home/ansible/techlab/hosts /home/ansible/techlab/inventory/
 $ cp /etc/ansible/ansible.cfg /home/ansible/techlab/
 ----
 
