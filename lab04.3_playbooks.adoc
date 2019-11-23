@@ -33,7 +33,7 @@ users:
 - There should be a entry in the file /etc/employees.txt for each user in the variable `users` (use a for-loop in the template)
 - If a user has no job specified, use "housekeeper" (have a look at "playbooks_filters" in the online docs)
 - On node2 the same playbook `userplay.yml` should create a (linux) group for every different job specified in the variable `users`. If a user has no job defined, create the group `housekeeper` instead
-- Create a user on node2 for every user entry in the `users` variable. Ensure that this user is also in the group with the same name as his job. Again, if no job defined for this user, add group `housekeeper`
+- Create a user on node2 for every entry in the `users` variable. Ensure that this user is also in the group with the same name as his job. Again, if no job defined for this user, add group `housekeeper`
 - BONUS: set the loginshell to /bin/zsh
 - BONUS: if (and only if) the user is `santos`, disable login (means set the shell to `/usr/sbin/nologin` and use a if/else statement in the template to do so)
 
