@@ -17,14 +17,15 @@ Create a playbook `webserver.yml` which does the following:
 - Run the playbook. After completion test if the `httpd.service` is running and enabled on node1.
 
 ### TASK 2
-- Create a folder `/home/ansible/techlab/inventory` and move your inventory-file `hosts` there.
+- Create a folder `/home/ansible/techlab/inventory` and move your inventory file `hosts` there.
 - Configure ansible to use `/home/ansible/techlab/inventory/hosts` as the default inventory. Do this using a configuration file in the `/home/ansible/techlab/` directory. 
 - Run the playbook `webserver.yml` again without using the `-i` flag to see if the configuration works.
 
 ### TASK 3
-Add intentionally errors to your plabook and have a look at the output. You should get a feeling for errormessages.
-- add a wrong intendation
+- Add intentionally errors to your plabook and have a look at the output. You should get a feeling for errormessages.
+- add a wrong intendation. Remember that this is a common mistake! 
 - add a wrong parameter name
+- Remove the mistakes
 
 [TIP]
 ====
@@ -97,7 +98,7 @@ $ mv /home/ansible/techlab/hosts /home/ansible/techlab/inventory
 $ cp /etc/ansible/ansible.cfg /home/ansible/techlab/
 ----
 
-Edit your `ansible.cfg` file. Uncomment and edit the first "inventory" entry to:
+Edit your `ansible.cfg` file. Uncomment and edit the "inventory" entry to use your file:
 [shell]
 ----
 ...
@@ -134,8 +135,8 @@ Wrong intendation:
   tasks:
     - name: install httpd
       yum:
-      name: httpd	# <--  
-      state: installed  # <-- 
+      name: httpd	# <-- wrong intendation
+      state: installed  # <-- wrong intendation
 ----
 
 Wrong parameter name:
@@ -149,7 +150,7 @@ Wrong parameter name:
       yum:
         name: httpd
         state: installed
-        enabled: yes     # <-- doesn't exist for service module
+        enabled: yes     # <-- doesn't exist for yum module
 ----
 
 ====

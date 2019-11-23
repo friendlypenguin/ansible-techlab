@@ -3,9 +3,9 @@
 During this lab you will configure ansible. You will be able to use ansible on the controller-node and run
 your first commands on the ansible-nodes.
 
-You have the IPs of the controller host and managemeble nodes. (given by your instructor). The controller host is where you execute Ansible from and the nodes represent the machines you like to manage.
+You have the IPs of the controller host and managemeble nodes (given by your instructor). The controller host is where you execute Ansible from and the nodes represent the machines you like to manage. (We will do some configurations on the controller as well.)
 
-To make it easier for inexperienced users we installed an editor and terminal accessible with your browser:
+To make it easier for inexperienced users we installed on the controller an editor and terminal accessible with your browser. You can then connect to the nodes from there.
 
 ## Connect to your control host
 
@@ -28,7 +28,7 @@ Do this now and then continue with the installation of Ansible.
 
 ### SSH
 
-Use your favourite ssh-client to connect to the ip of your control host as user ansible
+Use your favourite ssh-client to connect to the ip of your control host as user ansible. You can access the nodes using ssh as well.
 
 
 ### TASK 1
@@ -36,7 +36,7 @@ Use your favourite ssh-client to connect to the ip of your control host as user 
 
 [TIP]
 ====
-Use `sudo` to elevate your privilege to that of `root`. Be sure to only use root priviledges for installing the packages, you should do the rest of the lab as user anisble.
+Use `sudo` to elevate your privileges to that of `root`. Be sure to only use root priviledges for installing the packages, you should do the rest of the lab as user anisble.
 ====
 
 - Test if you can connect to the nodes from your controller using SSH. Use their public IPs you received from
@@ -44,8 +44,8 @@ Use `sudo` to elevate your privilege to that of `root`. Be sure to only use root
 - Make sure python is installed on your nodes before continuing with the lab.
 
 ### TASK 2
-- Create a SSH-keypair for the `ansible` user on the `controller`. 
-- Enable SSH-key login for the `ansible` user on all nodes and the controller by distributing the SSH-public key.
+- Create a SSH-keypair for the `ansible` user on the `controller`. Do not protect the keys with a password. 
+- Enable SSH-key login for the `ansible` user on all nodes and the controller itself by distributing the SSH-public key.
 - Test the login on the nodes and the controller using ansible.
 
 ### TASK 3
@@ -65,20 +65,19 @@ node2 ansible_host=<your-node2-ip>
 
 [TIP]
 ====
-Instead of copying the ssh-id to the controller itself you could set "ansible_connection=local" in the inventory file for host "controller".
+Instead of copying the ssh-id to the controller itself you could set "ansible_connection=local" in the inventory file for host "controller". Then ansible would not use ssh to connect to the controller, but use the "local" transport mechanism.
 ====
 
 [NOTE]
 ====
-You're default working directory is at `/home/ansible/techlab`. You can switch your workspace under "File/Open
+Your default working directory is at `/home/ansible/techlab`. You can switch your workspace under "File/Open
 Workspace" and using the drop down menu.
 ====
 
 - Check if ansible is ready using the `ping` module to ping all hosts in your inventory  
 
 ### TASK 4
-- Configure the `ansible` user to have root privilege on all hosts in your inventory file. Also enable login
-  without a password for this user.
+- Configure the `ansible` user to have root privilege on all hosts in your inventory file. Also enable login without a password for this user.
 - Test the functionality by running `sudo -v` as user `ansible` on all nodes.
 
 ## Solutions
@@ -94,7 +93,7 @@ Installing ansible with root privileges:
 Opening a SSH connection:  
 [shell]
 ----
-$ ssh -l ansible node1
+$ ssh -l ansible <your-node1-ip>
 ----
 - Enter "yes" when prompted if your want to continue connecting
 - Copy paste your SSH-password you received from your instructor when prompted and hit return
@@ -188,6 +187,6 @@ sudo -v
 
 [NOTE]
 ====
-You cannot do this using ansible yet. The reason being you need root privileges and we are just setting this up right now.  
+You cannot do this task using ansible yet. The reason being you need root privileges to change the sudoers configuration and we are just setting this privileges up right now.  
 ====
 =====

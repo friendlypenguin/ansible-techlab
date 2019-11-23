@@ -1,6 +1,6 @@
 # LAB04.2 - Ansible Playbooks - Variables and Loops
 
-In this lab we'll get used to writing and running ansible playbooks.
+In this lab we'll start to use variables and loops.
 
 ### TASK 1
 - In your playbook `webserver.yml` you have two tasks for starting and enabling `httpd` and `firewalld`. Merge these 2 tasks
@@ -15,8 +15,7 @@ Remember `loop:` or `with_items:`
 - In your playbook `webserver.yml`, ensure that that the yum package `firewalld` is installed. Do the installation of `httpd` and `firewalld` in one task. Do you really need to use a loop? Have a look at the description of the ansible module `yum`.
 
 ### TASK 3
-- Write a new playbook `motd.yml` which sets the content of `/etc/motd` on all servers to a custom text. Use
-  the variable `motd_content` and the `copy` module with the option `content` containing the variable. 
+- Write a new playbook `motd.yml` which sets the content of `/etc/motd` on all servers to a custom text. Use the variable `motd_content` and the `copy` module with the option `content` containing the variable. 
 
 ### TASK 4
 - Using the command line, overwrite the content of `motd` by providing the variable `motd_content` with a different value.
@@ -31,6 +30,12 @@ Remember `loop:` or `with_items:`
 ====
 Think about where you have to create the folders for your host and group variables
 ====
+
+### TASK 6
+- Add intentionally errors to your `motd.yml` playbook:
+- Omit the quotes around `{{ motd_content }}`
+- Run the playbook and get a feeling for the error message. Remember that this is a common mistake!
+- Remove the mistake
 
 ## Solutions
 
@@ -141,7 +146,7 @@ Your `motd.yml` should look something like this:
         dest: /etc/motd
         content: "{{ motd_content }}"
 ----
-After creating the new directories and files you should have something similar to this:
+After creating the new directories and files you should have content similar to this:
 [shell]
 ----
 $ cat inventory/group_vars/web.yml 
@@ -162,3 +167,18 @@ This is node2 # <-- worked like a charm
 [ansible@node2 ~]$
 ----
 ====
+
+.Solution 6
+[%collapsible]
+====
+[shell]
+----
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: set content of /etc/motd
+      copy:
+        dest: /etc/motd
+        content: {{ motd_content }} #<-- missing quotes here
+----

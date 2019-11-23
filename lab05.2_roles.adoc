@@ -3,20 +3,19 @@
 We start to use handlers and blocks as well.
 
 ### TASK 1
-- Create a playbook `myhandler.yml` which uses a role `handlerrole`.
+- Create a playbook `myhandler.yml` which applies a role `handlerrole` on node2.
 - The role `handlerrole` should do the following:
-- Create a directory `newdir` in the folder `/home/ansible`.
+- Create a directory `newdir` in the folder `/home/ansible`
 - If the folder didn't exist before, then do create a file `README.TXT` in this folder containing the text "This folder was created at <timestamp>"
-- The value of timestamp should contain a quite accurate timestamp of when `ansible-playbook` was run.
-- Run the playbook several times on node1 to see if it is really idempotent.
+- The value of <timestamp> should contain a quite accurate timestamp of when `ansible-playbook` was run
+- Run the playbook several times to see if it is really idempotent
 
 ### Task 2
-- Write a `download.yml` playbook which runs a role `downloader`.
+- Write a playbook `download.yml` which runs a role `downloader`.
 - The role `downloader` should try to download a file from a non-existing URL.
-- The playbook should be able to handle errors. Make the playbook output the message _"Download failed!"_ if
-  the `download` task failed. The playbook must keep on running and shall not exit after this message.
-- In all cases, output a message at the end of the play informing you the download attempt has finished.
-- Use a Block.
+- The role should be able to handle errors. Let it write the message _"Download failed!"_ to standard output if the `download` task failed. The playbook must keep on running and shall not exit after this message.
+- In all cases, output a message at the end of the play informing that the download attempt has finished
+- Use a `block:` to do these tasks
 
 
 ## Solutions
@@ -29,7 +28,7 @@ Below is a possible solution:
 [shell]
 ----
 $ cat myhandler.yml
-- hosts: node1
+- hosts: node2
   become: yes
   roles:
     - handerrole
@@ -65,7 +64,7 @@ $ cat download.yml
     - block:
         - name: Download things from the internet
           get_url:
-            url: http://www.asdfasdfasppppakdd.com/file
+            url: http://www.not_existing_url.com/not_existing_file
             dest: /tmp/
       rescue:
         - debug:
