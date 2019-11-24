@@ -202,18 +202,12 @@ Note that the `command` module is the `default` module and therefore has not to 
 ----
 $ ansible-vault encrypt secret_vars2.yml
 ----
-Be sure to comment the line in ansible.cfg defining the `vault_password_file`. Otherwise, ansible-vault would use this value and not the one asked for when using `@prompt`. This is rather a strange behaviour...
+Be sure to use `rekey` with `--new-vault-id`. By using `--vault-id`, ansible-vault would use the value from the vaultpasswordfile and not the one asked for by using `@prompt`. This could be quite misleading...
 
 [shell]
-----
-$ cat ansible.cfg
-...
-#vault_password_file = /home/ansible/techlab/vaultpassword #<-- comment
-...
+$ ansible-vault rekey secret_vars2.yml --new-vault-id @prompt
 
-$ ansible-vault rekey secret_vars2.yml --vault-id @prompt
-
-$ ansible-playbook view secret_vars2.yml
+$ ansible-playbook view secret_vars2.yml --vault-id @prompt
 ----
 ====
 
