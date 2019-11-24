@@ -1,9 +1,9 @@
 # LAB07 - Ansible vault
 
-In this lab we are going to practice encryption in ansible playbooks. It assumes your working directory is always `/home/ansible/techlab/`.
+In this lab we are going to practice encryption in ansible playbooks. It assumes your working directory is `/home/ansible/techlab/`.
 
 ### Task 1
-- Create a simple playbook called `secretservice.yml` which creates a file `MI6` in the `/etc/` directory on node1 and node2. Use the `template` module and a template named `nsa.j2`. Don't encrypt anything yet and use the inventory hosts from the earlier labs.
+- Create a simple playbook called `secretservice.yml` which creates a file `MI6` in the `/etc/` directory on node1 and node2. Use the `template` module and a template named `nsa.j2`. Don't encrypt anything yet and use the inventory file hosts from the earlier labs.
 
 The content of the file `MI6` should be:
 [shell]
@@ -58,9 +58,14 @@ You don't have to set a label.
 - Remove the `/etc/MI6` file on the nodes using an ad-hoc command.
 
 ### TASK 7
-- Encrypt another file secret_vars2.yml. Ensure its encrypted with your password
-- Change the encryption of the file: encrpyt it with another password provided at the commandline. (Hint not by decrypting & reencrypting but with using `rekey`)
-- try using the option --vault-id and try using --ask-vaut-pass
+- Encrypt another file secret_vars2.yml. Ensure its encrypted with your vault password file `vaultpassword`
+- Change the encryption of the file: encrpyt it with another password provided at the commandline.
+
+[TIP]
+====
+ Don't do this by decrypting & reencrypting but rather by using the `rekey` option. There's a trap hidden here. Doublecheck if everything worked as you expected.)
+====
+- Check the content of `secret_vars2.yml` by viewing it and providing the password at the command line.
 
 ### TASK 8
 - What can you do, to avoid ansible to print out sensitive data ar runtime? (see docs.ansible.com)
@@ -195,9 +200,20 @@ Note that the `command` module is the `default` module and therefore has not to 
 ====
 [shell]
 ----
+$ ansible-vault encrypt secret_vars2.yml
+----
+Be sure to comment the line in ansible.cfg defining the `vault_password_file`. Otherwise, ansible-vault would use this value and not the one asked for when using `@prompt`. This is rather a strange behaviour...
+
+[shell]
+----
+$ cat ansible.cfg
+...
+#vault_password_file = /home/ansible/techlab/vaultpassword #<-- comment
+...
+
 $ ansible-vault rekey secret_vars2.yml --vault-id @prompt
 
-$ ansible-playbook secretservice.yml -i inventory/hosts
+$ ansible-playbook view secret_vars2.yml
 ----
 ====
 
