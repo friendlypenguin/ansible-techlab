@@ -15,13 +15,13 @@ In this lab we start to use templates!
 ```
 users:
   - name: jim
-    food: apprentice
+    food: pizza
   - name: sabrina
-    food: chief
+    food: burger
   - name: hans
-    food: engineer
+    food: vegan
   - name: eveline
-    food: chief
+    food: burger
   - name: santos
 ```
 - Put the variable in an appropiate place of your choosing
