@@ -31,14 +31,14 @@ users:
 <name_of_user> <food_for_user>
 ```
 - There should be a entry in the file /etc/dinner.txt for each user in the variable `users` (use a for-loop in the template)
-- If a user has no food specified, use "housekeeper" (have a look at "playbooks_filters" in the online docs)
+- If a user has no food specified, use `kebab` (have a look at "playbooks_filters" in the online docs)
 - On node2 the same playbook `userplay.yml` should create a (linux) group for every different food specified in the variable `users`. If a user has no food defined, create the group `kebab` instead
 - Create a user on node2 for every entry in the `users` variable. Ensure that this user is also in the group with the same name as his food. Again, if no food defined for this user, add group `kebab`
 - BONUS: set the loginshell to /bin/zsh
 - BONUS: if (and only if) the user is `santos`, disable login (means set the shell to `/usr/sbin/nologin` and use a if/else statement in the template to do so)
 - BONUS: Set the default password on all servers to: <N0t_5o_s3cur3!> (the brackets <> are not part of the password.) Once the password was set, your playbook should not set it again or set it back to the default value once changed. Hash the password using the `sha512` algorithm. Don't define a salt for the password. Verify that you are able to login as one of the users via ssh and providing the password.
 
-WARNING: Be aware that it is NOT a good idea to set passwords in cleartext. We will learn in the lab about ansible-vault to handle this in a better way. Never ever do this in a productive environment.
+WARNING: Be aware that it is NOT a good idea to set passwords in cleartext. We will learn in the lab about ansible-vault how to handle this in a better way. Never ever do this in a productive environment.
 
 ### TASK 4 (Advanced)
 - Create a playbook `serverinfo.yml` that does the following:
