@@ -7,6 +7,14 @@ You have the IPs of the controller host and managemeble nodes (given by your ins
 
 To make it easier for inexperienced users we installed on the controller an editor and terminal accessible with your browser. You can then connect to the nodes from there.
 
+Unless otherwise specified, your working directory for all labs should be `/home/ansible/techlab/`.
+
+Some good advises:
+
+- always read all the tasks first. Some tasks might not be clear until you get the whole scope of the lab
+- open a terminal that you use only for ansible-doc (see later) and one terminal that you use for ad hoc commands (see later) to check the result of your plays.
+- copypaste all the filenames etc from the labs to your playbooks. You will do lesser errors.
+
 ## Connect to your control host
 
 ### Webbrowser
@@ -68,17 +76,15 @@ node2 ansible_host=<your-node2-ip>
 Instead of copying the ssh-id to the controller itself you could set "ansible_connection=local" in the inventory file for host "controller". Then ansible would not use ssh to connect to the controller, but use the "local" transport mechanism.
 ====
 
-[NOTE]
-====
-Your default working directory is at `/home/ansible/techlab`. You can switch your workspace under "File/Open
-Workspace" and using the drop down menu.
-====
-
 - Check if ansible is ready using the `ping` module to ping all hosts in your inventory  
 
 ### TASK 4
-- Configure the `ansible` user to have root privilege on all hosts in your inventory file. Also enable login without a password for this user.
-- Test the functionality by running `sudo -v` as user `ansible` on all nodes.
+- Configure the `ansible` user to have root privilege on all hosts in your inventory file. Also enable login without a password for this user
+- Test the functionality by running `sudo -v` as user `ansible` on all nodes
+
+### TASK 5
+- extend the inventory with a group `nodes` that has the groups `ẁeb` and `db` as members
+- ping all servers in the group `nodes`
 
 ## Solutions
 .Solution 1
@@ -190,3 +196,24 @@ sudo -v
 You cannot do this task using ansible yet. The reason being you need root privileges to change the sudoers configuration and we are just setting this privileges up right now.  
 ====
 =====
+
+.Solution 5
+[%collapsible]
+====
+[shell]
+$ cat inventory/hosts 
+[control]
+control0 ansible_host=192.168.122.30
+
+[web]
+node1 ansible_host=192.168.122.31
+
+[db]
+node2 ansible_host=192.168.122.32
+
+[nodes:children]
+web
+db
+
+$ ansible nodes -i hosts -m ping
+====
