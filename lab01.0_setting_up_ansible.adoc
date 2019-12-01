@@ -9,7 +9,7 @@ To make it easier for inexperienced users we installed on the controller an edit
 
 Unless otherwise specified, your working directory for all labs should be `/home/ansible/techlab/`.
 
-Some good advises:
+Some good advise:
 
 - always read all the tasks first. Some tasks might not be clear until you get the whole scope of the lab
 - open a terminal that you use only for ansible-doc (see later) and one terminal that you use for ad hoc commands (see later) to check the result of your plays.
