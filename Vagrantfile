@@ -8,7 +8,7 @@ SCRIPT
 Vagrant.configure("2") do |config|
     config.vm.define "control" do |control|
         control.vm.box = "centos/8"
-        control.vm.hostname = "node1"
+        control.vm.hostname = "control"
         control.vm.network "private_network", ip: "192.168.122.50"
         control.vm.provision "shell",
           inline: $script
