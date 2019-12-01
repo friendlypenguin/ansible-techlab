@@ -24,18 +24,18 @@ You've used the `ping` module in a previous lab.
   command for it to work?
 
 ### TASK 5
-- Set the hostname on all nodes using the inventory and an ad-hoc command.
+- Set the hostname on all nodes using the inventory and an ansible ad-hoc command.
 - Login on one of the nodes. Has the `hostname` been changed?
 
 ### TASK 6
-Complete the next steps using ad hoc commands:
+Complete the next steps using an ansible ad hoc commands:
 
 - Install `httpd` on the nodes in group `web`
 - Start `httpd` on the remote server and configure it to always start on boot.
 - Revert the changes made by the ad hoc commands again.
 
 ### TASK 7
-Complete the next steps using ad hoc commands:
+Complete the next steps using an ansible ad hoc commands:
 
 - Create a file `/home/ansible/testfile.txt` on node2.
 - Paste some custom text into the file using the `copy` module.
