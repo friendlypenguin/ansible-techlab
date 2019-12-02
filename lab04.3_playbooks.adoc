@@ -42,7 +42,7 @@ WARNING: Be aware that it is NOT a good idea to set passwords in cleartext. We w
 
 ### TASK 4 (Advanced)
 - Create a playbook `serverinfo.yml` that does the following:
-- Place a file `/root/serverinfo.txt` on all nodes with a line like follows for each and every server in the inventory:
+- Place a file `/root/serverinfo.txt` on all nodes with a line like follows for each server of the group `nodes` in the inventory:
 ```
 server_hostname: OS: <operating system> IP: <IP address> Virtualization Role: <hardware type>
 ```
@@ -205,6 +205,26 @@ $ ssh jim@node2
 .Solution 4
 [%collapsible]
 ====
+Solution 1:
+[shell]
+----
+$ cat serverinfo.txt.j2 
+{% for host in groups['nodes'] %}
+{{ hostvars[host].ansible_hostname }}: OS: {{ hostvars[host].ansible_os_family }} IP {{ hostvars[host].ansible_default_ipv4.address }} Virtualization Role: {{ hostvars[host].ansible_virtualization_role }}
+{% endfor %}
+
+$ cat serverinfo.yml 
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: put serverinfo.txt
+      template:
+        src: serverinfo.txt.j2
+        dest: /root/serverinfo.txt
+----
+
+Solution 2:
 [shell]
 ----
 $ cat serverinfo.yml 
@@ -216,7 +236,7 @@ $ cat serverinfo.yml
         path: /home/ansible/techlab/serverinfo.txt
         state: touch
 
-- hosts: all
+- hosts: nodes
   tasks:
     - name: fill in stuff to local serverinfo.txt
       lineinfile:
@@ -232,9 +252,11 @@ $ cat serverinfo.yml
       copy:
         src: /home/ansible/techlab/serverinfo.txt
         dest: /root/serverinfo.txt
-
+----
+Check your solution:
+[shell]
+----
 $ ansible-playbook serverinfo.yml
-
 $ ansible all -b -a "cat /root/serverinfo.txt"
 ----
 ====
