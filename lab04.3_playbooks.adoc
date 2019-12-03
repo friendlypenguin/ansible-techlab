@@ -67,6 +67,8 @@ $ cat motd.yml
 ---
 - hosts: all
   become: yes
+  vars:
+    motd_content: "This is my content"
   tasks:
     - name: set content of /etc/motd
       template:
