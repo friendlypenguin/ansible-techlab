@@ -14,10 +14,10 @@ Some good advise:
 - Open a terminal that you use only for ansible-doc (see later) and one terminal that you use for ad hoc commands (see later) to check the result of your plays.
 - Copypaste all the filenames and other information from the labs to your playbooks. You will do much lesser mistakes.
 
-## Vagrant Setup
-You can do the labs with any server you'd like. An easy solution would be to use vagrant. For more information about vagrant search the webs. With the vagrant setup provided with this lab you have three local virtual machines based on kvm. 
+## Vagrant Setup (Optional)
+You can do the labs with any server you'd like. An easy solution would be to use vagrant. For more information about vagrant search the webs. With the vagrant setup provided with this lab you have three local CentOS virtual machines using kvm. 
 
-WARNING: The following passwords are not secure and intended only to be used with local virtual machines.
+WARNING: The following passwords are not secure and intended only to be used with local virtual machines not reachable from outside of the virtualization host.
 
 ```
 control 192.168.122.50
