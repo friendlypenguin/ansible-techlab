@@ -1,4 +1,4 @@
-# LAB07 - Ansible vault
+# LAB06 - Ansible vault
 
 In this lab we are going to practice encryption in ansible playbooks. It assumes your working directory is `/home/ansible/techlab/`.
 
