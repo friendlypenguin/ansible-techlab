@@ -15,7 +15,7 @@ Some good advise:
 - Copypaste all the filenames and other information from the labs to your playbooks. You will do much lesser mistakes.
 
 ## Vagrant Setup (Optional)
-You can do the labs with any server you'd like. An easy solution would be to use vagrant. For more information about vagrant search the webs. With the vagrant setup provided with this lab you have three local CentOS virtual machines using kvm. 
+You can do the labs with any linux servers you'd like. An easy solution would be to use vagrant. For more information about vagrant search the webs. With the vagrant setup provided with this lab you can use three local CentOS virtual machines using kvm. 
 
 WARNING: The following passwords are not secure and intended only to be used with local virtual machines not reachable from outside of the virtualization host.
 
