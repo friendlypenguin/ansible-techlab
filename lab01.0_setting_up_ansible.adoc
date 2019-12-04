@@ -3,17 +3,17 @@
 During this lab you will configure ansible. You will be able to use ansible on the controller-node and run
 your first commands on the ansible-nodes.
 
-You have the IPs of the controller host and managemeble nodes (given by your instructor). The controller host is where you execute Ansible from and the nodes represent the machines you like to manage. (We will do some configurations on the controller as well.)
+You have the IPs of the controller host and manageable nodes (given by your instructor). The controller host is where you execute Ansible from and the nodes represent the machines you like to manage. (We will do some configurations on the controller as well.)
 
 To make it easier for inexperienced users we installed on the controller an editor and terminal accessible with your browser. You can then connect to the nodes from there.
 
 Unless otherwise specified, your working directory for all labs should be `/home/ansible/techlab/`.
 
-Some good advise:
+Some good advice:
 
 - always read all the tasks first. Some tasks might not be clear until you get the whole scope of the lab
 - open a terminal that you use only for ansible-doc (see later) and one terminal that you use for ad hoc commands (see later) to check the result of your plays.
-- copypaste all the filenames etc from the labs to your playbooks. You will do lesser errors.
+- copypaste all the filenames etc from the labs to your playbooks. You will make less mistakes.
 
 ## Connect to your control host
 
@@ -44,7 +44,7 @@ Use your favourite ssh-client to connect to the ip of your control host as user 
 
 [TIP]
 ====
-Use `sudo` to elevate your privilege to that of `root`. Be sure to only use root priviledges for installing the packages, you should do the rest of the lab as user anisble.
+Use `sudo` to elevate your privilege to that of `root`. Be sure to only use root priviledges for installing the packages, you should do the rest of the lab as user ansible.
 ====
 
 - Test if you can connect to the nodes from your controller using SSH. Use their public IPs you received from
@@ -83,7 +83,7 @@ Instead of copying the ssh-id to the controller itself you could set "ansible_co
 - Test the functionality by running `sudo -v` as user `ansible` on all nodes
 
 ### TASK 5
-- extend the inventory with a group `nodes` that has the groups `ẁeb` and `db` as members
+- extend the inventory with a group `nodes` that has the groups `web` and `db` as members
 - ping all servers in the group `nodes`
 
 ## Solutions
