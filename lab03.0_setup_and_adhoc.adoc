@@ -28,14 +28,14 @@ You've used the `ping` module in a previous lab.
 - Login on one of the nodes. Has the `hostname` been changed?
 
 ### TASK 6
-Complete the next steps using an ansible ad hoc commands:
+Complete the next steps using ansible ad hoc commands:
 
 - Install `httpd` on the nodes in group `web`
 - Start `httpd` on the remote server and configure it to always start on boot.
 - Revert the changes made by the ad hoc commands again.
 
 ### TASK 7
-Complete the next steps using an ansible ad hoc commands:
+Complete the next steps using ansible ad hoc commands:
 
 - Create a file `/home/ansible/testfile.txt` on node2.
 - Paste some custom text into the file using the `copy` module.
@@ -124,7 +124,7 @@ $ ansible-doc -s hostname
 $ ansible all -i hosts -b -m hostname -a "name={{ inventory_hostname }}"
 $ ssh ansible@[nodeIPhere]
 ----
-Did the host name change?
+Did the hostname change?
 ====
 
 .Solution 6
