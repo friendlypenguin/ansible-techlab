@@ -10,6 +10,8 @@ In this lab we start to use templates!
 - Improve the template `motd.j2` by adding the default ip address of the server to the template. 
 - Add the installed operating system to the motd file aswell
 
+TIP: Use a ansible fact to get the default ip address. Rember to get all the fact using the setup module (`ansible all -m setup`).
+
 ### TASK 3 (Advanced)
 - Create a variable `users` like the following:
 ```
@@ -67,6 +69,8 @@ $ cat motd.yml
 ---
 - hosts: all
   become: yes
+  vars:
+    motd_content: "This is my content"
   tasks:
     - name: set content of /etc/motd
       template:
