@@ -8,11 +8,11 @@ We assume, that each user has three virtual machines available:
 
 Unless otherwise specified, your working directory for all labs is `/home/ansible/techlab/`.
 
-Some good advise:
+Some good advice:
 
-- Always read all the tasks first. Some tasks might not be clear until you get the whole scope of the lab
+- Always read all the tasks first. Some tasks might not be clear until you get the whole scope of the lab.
 - Open a terminal that you use only for ansible-doc (see later) and one terminal that you use for ad hoc commands (see later) to check the result of your plays.
-- Copypaste all the filenames and other information from the labs to your playbooks. You will do much lesser mistakes.
+- Copypaste all the filenames and other information from the labs to your playbooks. You will make less mistakes.
 
 ## Vagrant Setup (Optional)
 You can do the labs with any linux servers you'd like. An easy solution would be to use vagrant. For more information about vagrant search the webs. With the vagrant setup provided with this lab you can use three local CentOS virtual machines using kvm. 
@@ -40,6 +40,6 @@ With vagrant you can create those vm's on your local machine, make sure vagrant 
 ### setup vm's
 # vagrant up
 
-### remove all vms
+### remove all vm's
 #vagrant destroy -f
 ```
